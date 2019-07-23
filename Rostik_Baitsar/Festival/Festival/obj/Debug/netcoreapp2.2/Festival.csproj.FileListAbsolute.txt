@@ -1,0 +1,14 @@
+C:\Users\Ростик\Desktop\nedo-net\Rostik_Baitsar\Festival\Festival\bin\Debug\netcoreapp2.2\Festival.deps.json
+C:\Users\Ростик\Desktop\nedo-net\Rostik_Baitsar\Festival\Festival\bin\Debug\netcoreapp2.2\Festival.runtimeconfig.json
+C:\Users\Ростик\Desktop\nedo-net\Rostik_Baitsar\Festival\Festival\bin\Debug\netcoreapp2.2\Festival.runtimeconfig.dev.json
+C:\Users\Ростик\Desktop\nedo-net\Rostik_Baitsar\Festival\Festival\bin\Debug\netcoreapp2.2\Festival.dll
+C:\Users\Ростик\Desktop\nedo-net\Rostik_Baitsar\Festival\Festival\bin\Debug\netcoreapp2.2\Festival.pdb
+C:\Users\Ростик\Desktop\nedo-net\Rostik_Baitsar\Festival\Festival\obj\Debug\netcoreapp2.2\Festival.csprojAssemblyReference.cache
+C:\Users\Ростик\Desktop\nedo-net\Rostik_Baitsar\Festival\Festival\obj\Debug\netcoreapp2.2\Festival.csproj.CoreCompileInputs.cache
+C:\Users\Ростик\Desktop\nedo-net\Rostik_Baitsar\Festival\Festival\obj\Debug\netcoreapp2.2\Festival.RazorAssemblyInfo.cache
+C:\Users\Ростик\Desktop\nedo-net\Rostik_Baitsar\Festival\Festival\obj\Debug\netcoreapp2.2\Festival.RazorAssemblyInfo.cs
+C:\Users\Ростик\Desktop\nedo-net\Rostik_Baitsar\Festival\Festival\obj\Debug\netcoreapp2.2\Festival.AssemblyInfoInputs.cache
+C:\Users\Ростик\Desktop\nedo-net\Rostik_Baitsar\Festival\Festival\obj\Debug\netcoreapp2.2\Festival.AssemblyInfo.cs
+C:\Users\Ростик\Desktop\nedo-net\Rostik_Baitsar\Festival\Festival\obj\Debug\netcoreapp2.2\Festival.RazorTargetAssemblyInfo.cache
+C:\Users\Ростик\Desktop\nedo-net\Rostik_Baitsar\Festival\Festival\obj\Debug\netcoreapp2.2\Festival.dll
+C:\Users\Ростик\Desktop\nedo-net\Rostik_Baitsar\Festival\Festival\obj\Debug\netcoreapp2.2\Festival.pdb
