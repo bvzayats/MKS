@@ -42,7 +42,7 @@ namespace NedoNet.API.Areas.v1.Controllers {
         }
 
         [HttpPost]
-        public IActionResult CreateUserAsync( [FromBody] CreateUserEntity userEntity ) {
+        public IActionResult CreateUser( [FromBody] CreateUserEntity userEntity ) {
             if (!ModelState.IsValid) {
                 return BadRequest( ModelIsNotValidErrorMessage );
             }
