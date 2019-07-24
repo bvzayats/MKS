@@ -1,54 +1,21 @@
-﻿using AutoMapper;
-using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using NedoNet.API.Services;
-using NedoNet.API.UOF;
 
 namespace NedoNet.API
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration) {
-            Configuration = configuration;
+        public void ConfigureServices(IServiceCollection services)
+        {
         }
 
-        public IConfiguration Configuration { get; }
-
-        public void ConfigureServices(IServiceCollection services) {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-
-            services.AddOptions();
-
-            #region AutoMapper
-
-            var mappingConfig = new MapperConfiguration(mc =>
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        {
+            if (env.IsDevelopment())
             {
-                mc.AddProfile(new MappingProfile());
-            });
-
-            var mapper = mappingConfig.CreateMapper();
-            services.AddSingleton(mapper);
-
-            #endregion
-
-            services.AddTransient<IUnitOfWork, UnitOfWork>();
-            services.AddScoped<IUsersService, UsersService>();
-
-        }
-
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env) {
-            if (env.IsDevelopment()) {
                 app.UseDeveloperExceptionPage();
             }
-
-            app.UseMvc(routes => {
-                routes.MapRoute(
-                    "default",
-                    "{controller=Home}/{action=Index}/{id?}");
-            });
         }
     }
 }
