@@ -40,6 +40,20 @@ namespace NedoNet.API.Areas.v1.Controllers {
 
             return BadRequest( result.Result );
         }
+
+        [HttpPost]
+        public IActionResult CreateUserAsync( [FromBody] CreateUserEntity userEntity ) {
+            if (!ModelState.IsValid) {
+                return BadRequest( ModelIsNotValidErrorMessage );
+            }
+
+            var result = _usersService.CreateUserAsync( userEntity );
+
+            if ( result.IsSuccess ) {
+                return Ok( result.Result );
+            }
+
+            return BadRequest( result.Result );
         }
     }
 }

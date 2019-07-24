@@ -25,47 +25,58 @@ namespace NedoNet.API.Services {
                 try {
                     await connection.OpenAsync();
                     var dr = await command.ExecuteReaderAsync();
-                    if (await dr.ReadAsync())
-                    {
+                    if (await dr.ReadAsync()) {
                         user = CreateUser(dr);
                     }
 
                     return OperationResult.Success(_mapper.Map<UserViewEntity>(user));
-                }
-                catch (Exception e)
-                {
-                    return OperationResult.Error(e.Message, e);
+                } catch (Exception e) {
+                    return OperationResult.Error( e.Message );
                 }
             }
         }
 
         public async Task<OperationResult> GetPageAsync( int page ) {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
+            using (SqlConnection connection = new SqlConnection( _connectionString )) 
             {
-                var command = new SqlCommand($"EXEC sp_SelectUsersPage @PageNumber = {page}, @PageSize = 4", connection);
+                var command = new SqlCommand($"EXEC sp_SelectUsersPage @PageNumber = { page }, @PageSize = 4", connection );
                 List<User> users = new List<User>();
-                try
-                {
+                try {
                     await connection.OpenAsync();
                     var dr = await command.ExecuteReaderAsync();
-                    while (await dr.ReadAsync())
-                    {
-                        users.Add(CreateUser(dr));
+                    while (await dr.ReadAsync()) {
+                        users.Add( CreateUser( dr ) );
                     }
 
                     return OperationResult.Success(_mapper.Map<List<UserViewEntity>>(users));
+                } catch (Exception e) {
+                    return OperationResult.Error(e.Message);
                 }
-                catch (Exception e)
-                {
-                    return OperationResult.Error(e.Message, e);
+            }
+        }
+
+        public OperationResult CreateUserAsync(CreateUserEntity userEntity) {
+            var user = _mapper.Map<User>( userEntity );
+
+            using (SqlConnection connection = new SqlConnection( _connectionString )) {
+                var command = new SqlCommand( $"INSERT INTO Users (Email, Password, FirstName, LastName, PhoneNumber) " +
+                                              $"VALUES ('{user.Email}', '{user.Password}', '{user.FirstName}', '{user.LastName}', '{user.PhoneNumber}')", connection);
+                try {
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                    connection.Close();
+
+                    var userView = _mapper.Map<UserViewEntity>( user );
+                    return OperationResult.Success( userView );
+                } catch (Exception e) {
+                    return OperationResult.Error( e.Message );
                 }
             }
         }
 
         private User CreateUser(SqlDataReader dr)
         {
-            return new User
-            {
+            return new User {
                 Id = Guid.Parse(dr["Id"].ToString()),
                 FirstName = dr["FirstName"].ToString(),
                 LastName = dr["LastName"].ToString(),
