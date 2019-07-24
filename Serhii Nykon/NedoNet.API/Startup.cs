@@ -20,8 +20,6 @@ namespace NedoNet.API
         public void ConfigureServices(IServiceCollection services) {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
-            services.AddOptions();
-
             #region AutoMapper
 
             var mappingConfig = new MapperConfiguration(mc =>
