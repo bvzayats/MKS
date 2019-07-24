@@ -8,6 +8,17 @@ namespace NedoNet.API
     {
         public void ConfigureServices(IServiceCollection services)
         {
+            #region AutoMapper
+
+            var mappingConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new MappingProfile());
+            });
+
+            var mapper = mappingConfig.CreateMapper();
+            services.AddSingleton(mapper);
+
+            #endregion
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
