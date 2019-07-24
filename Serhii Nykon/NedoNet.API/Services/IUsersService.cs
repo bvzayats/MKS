@@ -4,6 +4,7 @@ using NedoNet.API.Entities;
 
 namespace NedoNet.API.Services {
     public interface IUsersService {
-        Task<UserViewEntity> GetUser( Guid id );
+        Task<UserViewEntity> GetUserAsync( Guid id );
+
     }
 }

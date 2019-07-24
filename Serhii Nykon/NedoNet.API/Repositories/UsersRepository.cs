@@ -15,7 +15,7 @@ namespace NedoNet.API.Repositories {
             _mapper = mapper;
         }
 
-        public async Task<UserViewEntity> GetById( Guid userId ) {
+        public async Task<UserViewEntity> GetByIdAsync( Guid userId ) {
             using ( SqlConnection connection = new SqlConnection( _connectionString )) {
                 var command = new SqlCommand($"SELECT * FROM USERS WHERE ID = N'{userId}'", connection);
                 User user = null;

@@ -5,6 +5,6 @@ using NedoNet.API.Entities;
 
 namespace NedoNet.API.Repositories {
     public interface IUsersRepository {
-        Task<UserViewEntity> GetById( Guid userId );
+        Task<UserViewEntity> GetByIdAsync( Guid userId );
     }
 }
