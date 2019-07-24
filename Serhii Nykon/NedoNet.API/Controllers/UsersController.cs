@@ -21,9 +21,9 @@ namespace NedoNet.API.Controllers
 
         [HttpGet]
         [Route( "{userId}" )]
-        public async Task<IActionResult> GetUserAsync( Guid userId ) {
+        public async Task<IActionResult> GetUser( Guid userId ) {
 
-            var user = await _usersService.GetUserAsync( userId );
+            var user = await _usersService.GetUser( userId );
             return Ok(user);
         }
     }

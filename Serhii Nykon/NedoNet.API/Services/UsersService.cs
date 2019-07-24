@@ -11,8 +11,8 @@ namespace NedoNet.API.Services {
             _unitOfWork = unitOfWork;
         }
 
-        public async Task<UserViewEntity> GetUserAsync( Guid id ) {
-            return await _unitOfWork.UserRepository.GetByIdAsync( id );
+        public async Task<UserViewEntity> GetUser( Guid id ) {
+            return await _unitOfWork.UserRepository.GetById( id );
         }
     }
 }
