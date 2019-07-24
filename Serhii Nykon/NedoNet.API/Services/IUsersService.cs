@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using NedoNet.API.Entities;
+using NedoNet.API.Common;
 
 namespace NedoNet.API.Services {
     public interface IUsersService {
-        Task<UserViewEntity> GetUserAsync( Guid id );
-        Task<List<UserViewEntity>> GetPageAsync( int page );
+        Task<OperationResult> GetUserAsync( Guid id );
+        Task<OperationResult> GetPageAsync( int page );
     }
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Threading.Tasks;
 using AutoMapper;
+using NedoNet.API.Common;
 using NedoNet.API.Data.Models;
 using NedoNet.API.Entities;
 
@@ -17,7 +18,7 @@ namespace NedoNet.API.Services {
             _mapper = mapper;
         }
 
-        public async Task<UserViewEntity> GetUserAsync( Guid id ) {
+        public async Task<OperationResult> GetUserAsync( Guid id ) {
             using (SqlConnection connection = new SqlConnection(_connectionString)) {
                 var command = new SqlCommand($"SELECT * FROM USERS WHERE ID = N'{ id }'", connection);
                 User user = null;
@@ -29,16 +30,16 @@ namespace NedoNet.API.Services {
                         user = CreateUser(dr);
                     }
 
-                    return _mapper.Map<UserViewEntity>(user);
+                    return OperationResult.Success(_mapper.Map<UserViewEntity>(user));
                 }
-                catch
+                catch (Exception e)
                 {
-                    return null;
+                    return OperationResult.Error(e.Message, e);
                 }
             }
         }
 
-        public async Task<List<UserViewEntity>> GetPageAsync( int page ) {
+        public async Task<OperationResult> GetPageAsync( int page ) {
             using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 var command = new SqlCommand($"EXEC sp_SelectUsersPage @PageNumber = {page}, @PageSize = 4", connection);
@@ -52,11 +53,11 @@ namespace NedoNet.API.Services {
                         users.Add(CreateUser(dr));
                     }
 
-                    return _mapper.Map<List<UserViewEntity>>(users);
+                    return OperationResult.Success(_mapper.Map<List<UserViewEntity>>(users));
                 }
-                catch
+                catch (Exception e)
                 {
-                    return null;
+                    return OperationResult.Error(e.Message, e);
                 }
             }
         }
