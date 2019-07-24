@@ -18,12 +18,10 @@ namespace NedoNet.API.Services {
         }
 
         public async Task<UserViewEntity> GetUserAsync( Guid id ) {
-            using (SqlConnection connection = new SqlConnection(_connectionString))
-            {
+            using (SqlConnection connection = new SqlConnection(_connectionString)) {
                 var command = new SqlCommand($"SELECT * FROM USERS WHERE ID = N'{ id }'", connection);
                 User user = null;
-                try
-                {
+                try {
                     await connection.OpenAsync();
                     var dr = await command.ExecuteReaderAsync();
                     if (await dr.ReadAsync())
