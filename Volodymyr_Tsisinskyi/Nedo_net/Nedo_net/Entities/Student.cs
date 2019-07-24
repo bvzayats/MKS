@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Nedo_net.Entities
+﻿namespace Nedo_net.Entities
 {
     public class Student
     {
