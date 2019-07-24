@@ -12,11 +12,4 @@
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="2.2.3" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Areas\v1\Controllers\" />
-    <Folder Include="Areas\v1\Data\" />
-    <Folder Include="Areas\v1\Models\" />
-    <Folder Include="Areas\v1\Views\" />
-  </ItemGroup>
-
 </Project>

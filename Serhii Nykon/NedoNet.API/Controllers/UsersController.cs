@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using NedoNet.API.Entities;
 using NedoNet.API.Services;
 
-namespace NedoNet.API.Areas.v1.Controllers {
+namespace NedoNet.API.Controllers {
     [Route("api/[controller]")]
     [ApiController]
     public class UsersController : ControllerBase {

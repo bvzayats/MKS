@@ -31,9 +31,8 @@ namespace NedoNet.API {
 
             app.UseMvc(routes => {
                 routes.MapRoute(
-                    name: "areas",
-                    template: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
-                );
+                    "default",
+                    "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }
