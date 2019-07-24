@@ -1,0 +1,3 @@
+Nedo_net/.vs/
+Nedo_net/Nedo_net/[Bb]in/
+Nedo_net/Nedo_net/[Oo]bj/
