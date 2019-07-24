@@ -74,6 +74,32 @@ namespace NedoNet.API.Services {
             }
         }
 
+        public OperationResult UpdateUser( Guid userId, UpdateUserEntity updateUserEntity ) {
+            var user = _mapper.Map<User>( updateUserEntity );
+
+            using (SqlConnection connection = new SqlConnection(_connectionString)) {
+                var command = new SqlCommand( $"UPDATE Users SET " +
+                                              $"Email = '{user.Email}', " +
+                                              $"Password = '{user.Password}', " +
+                                              $"FirstName = '{user.FirstName}', " +
+                                              $"LastName = '{user.LastName}', " +
+                                              $"PhoneNumber = '{user.PhoneNumber}' " +
+                                              $"WHERE Id = N'{userId}'", connection );
+                try {
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                    connection.Close();
+
+                    var userView = _mapper.Map<UserViewEntity>(user);
+                    return OperationResult.Success(userView);
+                }
+                catch (Exception e)
+                {
+                    return OperationResult.Error(e.Message);
+                }
+            }
+        }
+
         private User CreateUser(SqlDataReader dr)
         {
             return new User {

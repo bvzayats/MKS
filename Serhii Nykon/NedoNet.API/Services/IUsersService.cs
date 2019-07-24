@@ -10,5 +10,6 @@ namespace NedoNet.API.Services {
         Task<OperationResult> GetUserAsync( Guid id );
         Task<OperationResult> GetPageAsync( int page );
         OperationResult CreateUser( CreateUserEntity userEntity );
+        OperationResult UpdateUser( Guid userId, UpdateUserEntity user );
     }
 }

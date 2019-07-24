@@ -19,6 +19,7 @@ namespace NedoNet.API
             #region Models -> Entities
 
             CreateMap<CreateUserEntity, User>();
+            CreateMap<UpdateUserEntity, User>();
 
             #endregion
         }

@@ -43,7 +43,7 @@ namespace NedoNet.API.Areas.v1.Controllers {
 
         [HttpPost]
         public IActionResult CreateUser( [FromBody] CreateUserEntity userEntity ) {
-            if (!ModelState.IsValid) {
+            if ( !ModelState.IsValid ) {
                 return BadRequest( ModelIsNotValidErrorMessage );
             }
 
@@ -55,6 +55,26 @@ namespace NedoNet.API.Areas.v1.Controllers {
 
             return BadRequest( result.Result );
         }
+
+        [HttpPut]
+        public IActionResult UpdateUser([FromQuery] Guid? id, [FromBody] UpdateUserEntity userEntity) {
+            if ( !id.HasValue ) {
+                return BadRequest("Id must be set");
+            }
+
+            if ( !ModelState.IsValid ) {
+                return BadRequest( ModelIsNotValidErrorMessage );
+            }
+
+            var result = _usersService.UpdateUser(id.Value, userEntity);
+
+            if ( result.IsSuccess ) {
+                return Ok( result.Result );
+            }
+
+            return BadRequest( result.Result );
+        }
+
 
     }
 }
