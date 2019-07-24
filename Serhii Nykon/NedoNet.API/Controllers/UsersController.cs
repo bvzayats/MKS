@@ -20,16 +20,11 @@ namespace NedoNet.API.Controllers
         }
 
         [HttpGet]
-        [Route("user")]
-        public async Task<IActionResult> GetUserAsync([FromQuery] Guid id ) {
-            var user = await _usersService.GetUserAsync( id );
-            return Ok( user );
-        }
+        [Route( "{userId}" )]
+        public async Task<IActionResult> GetUserAsync( Guid userId ) {
 
-        [HttpGet]
-        public async Task<IActionResult> GetUsersPage([FromQuery] int page ) {
-            var users = await _usersService.GetPageAsync( page );
-            return Ok( users );
+            var user = await _usersService.GetUserAsync( userId );
+            return Ok(user);
         }
     }
 }
