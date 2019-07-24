@@ -11,6 +11,7 @@ namespace NedoNet.API.Areas.v1.Controllers {
         private readonly IUsersService _usersService;
 
         private static readonly string ModelIsNotValidErrorMessage = "Model is not valid";
+        private static readonly string IdMustBeSetErrorMessage = "Id must be set";
 
         public UsersController( IUsersService usersService ) {
             _usersService = usersService;
@@ -59,7 +60,7 @@ namespace NedoNet.API.Areas.v1.Controllers {
         [HttpPut]
         public IActionResult UpdateUser([FromQuery] Guid? id, [FromBody] UpdateUserEntity userEntity) {
             if ( !id.HasValue ) {
-                return BadRequest("Id must be set");
+                return BadRequest(IdMustBeSetErrorMessage);
             }
 
             if ( !ModelState.IsValid ) {
@@ -75,6 +76,19 @@ namespace NedoNet.API.Areas.v1.Controllers {
             return BadRequest( result.Result );
         }
 
+        [HttpDelete]
+        public IActionResult DeleteUser([FromQuery] Guid? id) {
+            if ( !id.HasValue ) {
+                return BadRequest( IdMustBeSetErrorMessage );
+            }
 
+            var result = _usersService.DeleteUser( id.Value );
+
+            if ( result.IsSuccess ) {
+                return Ok();
+            }
+
+            return BadRequest( result.Result );
+        }
     }
 }

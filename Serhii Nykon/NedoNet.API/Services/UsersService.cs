@@ -92,10 +92,23 @@ namespace NedoNet.API.Services {
 
                     var userView = _mapper.Map<UserViewEntity>(user);
                     return OperationResult.Success(userView);
-                }
-                catch (Exception e)
-                {
+                } catch (Exception e) {
                     return OperationResult.Error(e.Message);
+                }
+            }
+        }
+
+        public OperationResult DeleteUser( Guid userId ) {
+            using (SqlConnection connection = new SqlConnection( _connectionString )) {
+                var command = new SqlCommand( $"DELETE FROM Users WHERE Id = N'{userId}'", connection );
+                try {
+                    connection.Open();
+                    command.ExecuteNonQuery();
+                    connection.Close();
+
+                    return OperationResult.Success();
+                } catch (Exception e) {
+                    return OperationResult.Error( e.Message );
                 }
             }
         }
