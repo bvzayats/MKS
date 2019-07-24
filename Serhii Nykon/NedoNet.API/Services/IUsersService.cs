@@ -9,6 +9,6 @@ namespace NedoNet.API.Services {
     public interface IUsersService {
         Task<OperationResult> GetUserAsync( Guid id );
         Task<OperationResult> GetPageAsync( int page );
-        OperationResult CreateUserAsync( CreateUserEntity userEntity );
+        OperationResult CreateUser( CreateUserEntity userEntity );
     }
 }

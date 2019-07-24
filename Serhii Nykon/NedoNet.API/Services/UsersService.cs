@@ -55,7 +55,7 @@ namespace NedoNet.API.Services {
             }
         }
 
-        public OperationResult CreateUserAsync(CreateUserEntity userEntity) {
+        public OperationResult CreateUser(CreateUserEntity userEntity) {
             var user = _mapper.Map<User>( userEntity );
 
             using (SqlConnection connection = new SqlConnection( _connectionString )) {

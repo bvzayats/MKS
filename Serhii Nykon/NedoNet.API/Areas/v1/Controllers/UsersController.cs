@@ -47,7 +47,7 @@ namespace NedoNet.API.Areas.v1.Controllers {
                 return BadRequest( ModelIsNotValidErrorMessage );
             }
 
-            var result = _usersService.CreateUserAsync( userEntity );
+            var result = _usersService.CreateUser( userEntity );
 
             if ( result.IsSuccess ) {
                 return Ok( result.Result );
@@ -55,5 +55,6 @@ namespace NedoNet.API.Areas.v1.Controllers {
 
             return BadRequest( result.Result );
         }
+
     }
 }
