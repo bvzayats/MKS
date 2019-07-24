@@ -19,6 +19,8 @@ namespace NedoNet.API
             services.AddSingleton(mapper);
 
             #endregion
+
+            services.AddScoped<IUsersService, UsersService>();
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
