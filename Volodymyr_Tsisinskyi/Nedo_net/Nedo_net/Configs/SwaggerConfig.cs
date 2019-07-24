@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Nedo_net.Configs
+﻿namespace Nedo_net.Configs
 {
     public class SwaggerConfig
     {
