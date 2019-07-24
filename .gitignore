@@ -7,3 +7,10 @@ Bohdan_Khamurda/WebAPISwagger/WebAPISwagger/obj/WebAPISwagger.csproj.nuget.g.tar
 Bohdan_Khamurda/WebAPISwagger/WebAPISwagger/obj/WebAPISwagger.csproj.nuget.g.props
 Bohdan_Khamurda/WebAPISwagger/WebAPISwagger/obj/project.assets.json
 Bohdan_Khamurda/WebAPISwagger/.vs/WebAPISwagger/v16/Server/sqlite3/storage.ide-wal
+*.config
+*.json
+*.pdb
+Bohdan_Khamurda/WebAPISwagger/WebAPISwagger/obj/Debug/netcoreapp2.2/WebAPISwagger.csproj.FileListAbsolute.txt
+Bohdan_Khamurda/WebAPISwagger/WebAPISwagger/bin/Debug/netcoreapp2.2/WebAPISwagger.dll
+Bohdan_Khamurda/WebAPISwagger/.vs/WebAPISwagger/DesignTimeBuild/.dtbcache
+Bohdan_Khamurda/WebAPISwagger/WebAPISwagger/obj/Debug/netcoreapp2.2/WebAPISwagger.dll
