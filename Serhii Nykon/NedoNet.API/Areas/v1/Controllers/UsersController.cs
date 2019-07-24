@@ -25,7 +25,7 @@ namespace NedoNet.API.Areas.v1.Controllers {
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetUsersPage([FromQuery] int page) {
+        public async Task<IActionResult> GetUsersPageAsync([FromQuery] int page) {
             var result = await _usersService.GetPageAsync( page );
             
             return Ok(result.Result);
