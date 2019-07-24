@@ -18,6 +18,11 @@ namespace Nedo_net
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            services.AddSwaggerGen(x =>
+            {
+                x.SwaggerDoc("v1", new Swashbuckle.AspNetCore.Swagger.Info { Title = "Student API", Version = "v1" });
+            });
         }
 
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -30,6 +35,19 @@ namespace Nedo_net
             {
                 app.UseHsts();
             }
+
+            var swaggerConfig = new Nedo_net.Configs.SwaggerConfig();
+            Configuration.GetSection(nameof(Nedo_net.Configs.SwaggerConfig)).Bind(swaggerConfig);
+
+            app.UseSwagger(option =>
+            {
+                option.RouteTemplate = swaggerConfig.JsonRoute;
+            });
+
+            app.UseSwaggerUI(option =>
+            {
+                option.SwaggerEndpoint(swaggerConfig.UiEndpoint, swaggerConfig.Description);
+            });
 
             app.UseHttpsRedirection();
             app.UseMvc();
