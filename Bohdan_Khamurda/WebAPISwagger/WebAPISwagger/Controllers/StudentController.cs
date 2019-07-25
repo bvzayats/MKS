@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPISwagger.Controllers
 {
-    [Route]
     [ApiController]
     public class StudentController : ControllerBase
     {
@@ -26,6 +25,33 @@ namespace WebAPISwagger.Controllers
             {
                 return StatusCode(StatusCodes.Status500InternalServerError);
             }
+        }
+
+        [HttpGet]
+        public IActionResult Get(int id)
+        {
+            return null;
+        }
+
+
+        [HttpPost]
+        public IActionResult Post([FromBody] Students value)
+        {
+            return null;
+        }
+
+
+        [HttpPut]
+        public IActionResult Put(int id, [FromBody] Students value)
+        {
+            return null;
+        }
+
+
+        [HttpDelete]
+        public IActionResult Delete(int id)
+        {
+            return null;
         }
     }
 }
