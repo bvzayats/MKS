@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
-using NedoNet.API.Common;
 using NedoNet.API.Data.Models;
 using NedoNet.API.Entities;
 
@@ -18,98 +18,85 @@ namespace NedoNet.API.Services {
             _mapper = mapper;
         }
 
-        public async Task<OperationResult> GetUserAsync( Guid id ) {
-            using (SqlConnection connection = new SqlConnection(_connectionString)) {
-                var command = new SqlCommand($"SELECT * FROM USERS WHERE ID = N'{ id }'", connection);
+        public async Task<UserViewEntity> GetUserAsync( Guid id ) {
+            using (SqlConnection connection = new SqlConnection( _connectionString )) {
+                var command = new SqlCommand( $"SELECT * FROM USERS WHERE ID = N'{id}'", connection );
                 User user = null;
-                try {
-                    await connection.OpenAsync();
-                    var dr = await command.ExecuteReaderAsync();
-                    if (await dr.ReadAsync()) {
-                        user = UserFromDataReader( dr );
-                    }
 
-                    return OperationResult.Success(_mapper.Map<UserViewEntity>(user));
-                } catch (Exception e) {
-                    return OperationResult.Error( e.Message );
+                await connection.OpenAsync();
+                var dr = await command.ExecuteReaderAsync();
+                if (await dr.ReadAsync()) {
+                    user = UserFromDataReader( dr );
                 }
+
+                return _mapper.Map<UserViewEntity>( user );
             }
         }
 
-        public async Task<OperationResult> GetPageAsync( int page ) {
-            using (SqlConnection connection = new SqlConnection( _connectionString )) 
-            {
-                var command = new SqlCommand($"EXEC sp_SelectUsersPage @PageNumber = { page }, @PageSize = 4", connection );
+        public async Task<List<UserViewEntity>> GetPageAsync( int page ) {
+            using (SqlConnection connection = new SqlConnection( _connectionString )) {
+                var command = new SqlCommand( $"EXEC sp_SelectUsersPage @PageNumber = {page}, @PageSize = 4",
+                    connection );
                 List<User> users = new List<User>();
-                try {
-                    await connection.OpenAsync();
-                    var dr = await command.ExecuteReaderAsync();
-                    while (await dr.ReadAsync()) {
-                        users.Add( UserFromDataReader( dr ) );
-                    }
-
-                    return OperationResult.Success(_mapper.Map<List<UserViewEntity>>(users));
-                } catch (Exception e) {
-                    return OperationResult.Error(e.Message);
+                await connection.OpenAsync();
+                var dr = await command.ExecuteReaderAsync();
+                while (await dr.ReadAsync()) {
+                    users.Add( UserFromDataReader( dr ) );
                 }
+
+                return _mapper.Map<List<UserViewEntity>>( users );
             }
         }
 
-        public OperationResult CreateUser(CreateUserEntity userEntity) {
+        public UserViewEntity CreateUser( CreateUserEntity userEntity ) {
             var user = _mapper.Map<User>( userEntity );
 
             using (SqlConnection connection = new SqlConnection( _connectionString )) {
-                var command = new SqlCommand( $"INSERT INTO Users (Email, Password, FirstName, LastName, PhoneNumber) " +
-                                              $"VALUES ('{user.Email}', '{user.Password}', '{user.FirstName}', '{user.LastName}', '{user.PhoneNumber}')", connection);
-                try {
-                    connection.Open();
-                    command.ExecuteNonQuery();
-                    connection.Close();
+                StringBuilder commandText = new StringBuilder();
+                commandText
+                    .Append( $"INSERT INTO Users (Email, Password, FirstName, LastName, PhoneNumber)" )
+                    .Append(
+                        $"VALUES ('{user.Email}', '{user.Password}', '{user.FirstName}', '{user.LastName}', '{user.PhoneNumber}')" );
 
-                    var userView = _mapper.Map<UserViewEntity>( user );
-                    return OperationResult.Success( userView );
-                } catch (Exception e) {
-                    return OperationResult.Error( e.Message );
-                }
+                var command = new SqlCommand( commandText.ToString(), connection );
+
+                connection.Open();
+                command.ExecuteNonQuery();
+                connection.Close();
+
+                var userView = _mapper.Map<UserViewEntity>( user );
+                return userView;
             }
         }
 
-        public OperationResult UpdateUser( Guid userId, UpdateUserEntity updateUserEntity ) {
+        public UserViewEntity UpdateUser( Guid userId, UpdateUserEntity updateUserEntity ) {
             var user = _mapper.Map<User>( updateUserEntity );
 
-            using (SqlConnection connection = new SqlConnection(_connectionString)) {
-                var command = new SqlCommand( $"UPDATE Users SET " +
-                                              $"Email = '{user.Email}', " +
-                                              $"Password = '{user.Password}', " +
-                                              $"FirstName = '{user.FirstName}', " +
-                                              $"LastName = '{user.LastName}', " +
-                                              $"PhoneNumber = '{user.PhoneNumber}' " +
-                                              $"WHERE Id = N'{userId}'", connection );
-                try {
-                    connection.Open();
-                    command.ExecuteNonQuery();
-                    connection.Close();
+            using (SqlConnection connection = new SqlConnection( _connectionString )) {
+                var commandText = new StringBuilder();
+                commandText
+                    .Append( $"UPDATE Users SET " )
+                    .Append( $"Email = '{user.Email}', Password = '{user.Password}', FirstName = '{user.FirstName}', " )
+                    .Append( $"LastName = '{user.LastName}', PhoneNumber = '{user.PhoneNumber}'" );
 
-                    var userView = _mapper.Map<UserViewEntity>(user);
-                    return OperationResult.Success(userView);
-                } catch (Exception e) {
-                    return OperationResult.Error(e.Message);
-                }
+                commandText.Append( $" WHERE Id = N'{userId}'" );
+                var command = new SqlCommand( commandText.ToString(), connection );
+
+                connection.Open();
+                command.ExecuteNonQuery();
+                connection.Close();
+
+                var userView = _mapper.Map<UserViewEntity>( user );
+                return userView;
             }
         }
 
-        public OperationResult DeleteUser( Guid userId ) {
+        public void DeleteUser( Guid userId ) {
             using (SqlConnection connection = new SqlConnection( _connectionString )) {
                 var command = new SqlCommand( $"DELETE FROM Users WHERE Id = N'{userId}'", connection );
-                try {
-                    connection.Open();
-                    command.ExecuteNonQuery();
-                    connection.Close();
-
-                    return OperationResult.Success();
-                } catch (Exception e) {
-                    return OperationResult.Error( e.Message );
-                }
+                connection.Open();
+                command.ExecuteNonQuery();
+                connection.Close();
             }
         }
 
