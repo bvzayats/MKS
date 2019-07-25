@@ -18,10 +18,12 @@ namespace NedoNet.API
 
             #endregion
 
+            #region BindingModels -> Models
 
-            #region BindingModels -> Entities
-
-            CreateMap<UserBindingModel, User>();
+            CreateMap<UserBindingModel, UserViewModel>()
+                .ForMember(
+                    dest => dest.FullName,
+                    opts => opts.MapFrom(src => $"{src.FirstName} {src.LastName}"));
 
             #endregion
         }

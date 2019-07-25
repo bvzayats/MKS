@@ -32,6 +32,10 @@ namespace NedoNet.API.Services {
                     user = UserFromDataReader(dr);
                 }
 
+                if (user is null) {
+                    return null;
+                }
+
                 return _mapper.Map<UserViewModel>( user );
             }
         }
@@ -51,21 +55,22 @@ namespace NedoNet.API.Services {
         }
 
         public UserViewModel CreateUser(UserBindingModel model) {
-            var user = _mapper.Map<User>(model);
-
             using (var connection = new SqlConnection(_connectionString)) {
                 StringBuilder commandText = new StringBuilder();
                 commandText
                     .Append($"INSERT INTO Users (Email, Password, FirstName, LastName, PhoneNumber)")
-                    .Append($"VALUES ('{user.Email}', '{user.Password}', '{user.FirstName}', '{user.LastName}', '{user.PhoneNumber}')");
+                    .Append($"VALUES ('{model.Email}', '{model.Password}', '{model.FirstName}', '{model.LastName}', '{model.PhoneNumber}')");
 
                 var command = new SqlCommand(commandText.ToString(), connection);
 
                 connection.Open();
-                command.ExecuteNonQuery();
+                int res = command.ExecuteNonQuery();
+                if (res == 0) {
+                    throw new Exception("Can not put users to the database, please try again later");
+                }
                 connection.Close();
 
-                var userView = _mapper.Map<UserViewModel>(user);
+                var userView = _mapper.Map<UserViewModel>(model);
                 return userView;
             }
         }
@@ -75,14 +80,12 @@ namespace NedoNet.API.Services {
                 throw new ItemNotFoundException($"No such user with id {userId}", userId);
             }
 
-            var user = _mapper.Map<User>(model);
-
             using (var connection = new SqlConnection(_connectionString)) {
                 var commandText = new StringBuilder();
                 commandText
                     .Append($"UPDATE Users SET ")
-                    .Append($"Email = '{user.Email}', Password = '{user.Password}', FirstName = '{user.FirstName}', ")
-                    .Append($"LastName = '{user.LastName}', PhoneNumber = '{user.PhoneNumber}'");
+                    .Append($"Email = '{model.Email}', Password = '{model.Password}', FirstName = '{model.FirstName}', ")
+                    .Append($"LastName = '{model.LastName}', PhoneNumber = '{model.PhoneNumber}'");
 
                 commandText.Append($" WHERE Id = N'{userId}'");
                 var command = new SqlCommand(commandText.ToString(), connection);
@@ -91,7 +94,7 @@ namespace NedoNet.API.Services {
                 command.ExecuteNonQuery();
                 connection.Close();
 
-                var userView = _mapper.Map<UserViewModel>(user);
+                var userView = _mapper.Map<UserViewModel>(model);
                 return userView;
             }
         }
