@@ -8,14 +8,14 @@ using AutoMapper;
 using NedoNet.API.Data.Models;
 using NedoNet.API.Entities;
 using NedoNet.API.Exceptions;
+using NedoNet.API.Helpers;
 
 namespace NedoNet.API.Services {
     public class UsersService : IUsersService {
 
         private readonly IMapper _mapper;
 
-        private readonly string _connectionString =
-            "Server=(localdb)\\mssqllocaldb;Database=NedoNet;Trusted_Connection=True;";
+        private readonly string _connectionString = ConnectionStringHelper.ConnectionString;
 
         public UsersService(IMapper mapper) {
             _mapper = mapper;
