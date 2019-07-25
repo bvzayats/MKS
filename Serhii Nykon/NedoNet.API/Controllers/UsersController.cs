@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NedoNet.API.BindingModels;
-using NedoNet.API.Data.Models;
-using NedoNet.API.Entities;
 using NedoNet.API.Exceptions;
 using NedoNet.API.Services;
 
