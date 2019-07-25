@@ -3,28 +3,41 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NedoNet.API.Data.Models;
+using NedoNet.API.Services;
 
 namespace NedoNet.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     public class UsersController : ControllerBase {
+        private readonly IUsersService _usersService;
+
+        public UsersController( IUsersService usersService ) {
+            _usersService = usersService;
+        }
+
         [HttpGet]
-        public IActionResult GetUser() {
-            return Ok( new User {
-                Id = Guid.NewGuid(),
-                Email = "testEmail",
-                FirstName = "testFirstName",
-                LastName = "testLastName",
-                PhoneNumber = "+380974925772"
-            } );
+        public async Task<IActionResult> GetAllUsers() {
+            try {
+                var users = await _usersService.GetAllUsersAsync();
+
+                return Ok(users);
+            }
+            catch (Exception) {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
         }
 
         [HttpGet]
         [Route("{id}")]
-        public IActionResult GetUser(Guid id) {
-
-            return Ok();
+        public async Task<IActionResult> GetUser(Guid id) {
+            try {
+                var user = await _usersService.GetUserAsync(id);
+                return Ok(user);
+            }
+            catch (Exception) {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
         }
 
         [HttpPost]
