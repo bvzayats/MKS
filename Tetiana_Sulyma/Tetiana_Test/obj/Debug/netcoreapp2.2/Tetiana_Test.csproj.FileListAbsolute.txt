@@ -3,7 +3,6 @@ D:\wfolder\nedo-net\Tetiana_Sulyma\Tetiana_Test\bin\Debug\netcoreapp2.2\Tetiana_
 D:\wfolder\nedo-net\Tetiana_Sulyma\Tetiana_Test\bin\Debug\netcoreapp2.2\Tetiana_Test.runtimeconfig.dev.json
 D:\wfolder\nedo-net\Tetiana_Sulyma\Tetiana_Test\bin\Debug\netcoreapp2.2\Tetiana_Test.dll
 D:\wfolder\nedo-net\Tetiana_Sulyma\Tetiana_Test\bin\Debug\netcoreapp2.2\Tetiana_Test.pdb
-D:\wfolder\nedo-net\Tetiana_Sulyma\Tetiana_Test\obj\Debug\netcoreapp2.2\Tetiana_Test.csprojAssemblyReference.cache
 D:\wfolder\nedo-net\Tetiana_Sulyma\Tetiana_Test\obj\Debug\netcoreapp2.2\Tetiana_Test.csproj.CoreCompileInputs.cache
 D:\wfolder\nedo-net\Tetiana_Sulyma\Tetiana_Test\obj\Debug\netcoreapp2.2\Tetiana_Test.RazorAssemblyInfo.cache
 D:\wfolder\nedo-net\Tetiana_Sulyma\Tetiana_Test\obj\Debug\netcoreapp2.2\Tetiana_Test.RazorAssemblyInfo.cs
