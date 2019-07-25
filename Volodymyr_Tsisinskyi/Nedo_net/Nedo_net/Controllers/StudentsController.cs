@@ -10,7 +10,7 @@ namespace Nedo_net.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ValuesController : ControllerBase
+    public class StudentsController : ControllerBase
     {
         SQLcommands sqlcomm = new SQLcommands();
 
