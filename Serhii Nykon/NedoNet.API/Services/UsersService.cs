@@ -44,6 +44,7 @@ namespace NedoNet.API.Services {
             return new User
             {
                 Id = Guid.Parse(dr["Id"].ToString()),
+                Password = dr["Password"].ToString(),
                 FirstName = dr["FirstName"].ToString(),
                 LastName = dr["LastName"].ToString(),
                 Email = dr["Email"].ToString(),
