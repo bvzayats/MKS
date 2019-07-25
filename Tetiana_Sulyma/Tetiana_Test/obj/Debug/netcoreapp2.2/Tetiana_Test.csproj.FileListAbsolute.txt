@@ -11,3 +11,4 @@ D:\wfolder\nedo-net\Tetiana_Sulyma\Tetiana_Test\obj\Debug\netcoreapp2.2\Tetiana_
 D:\wfolder\nedo-net\Tetiana_Sulyma\Tetiana_Test\obj\Debug\netcoreapp2.2\Tetiana_Test.RazorTargetAssemblyInfo.cache
 D:\wfolder\nedo-net\Tetiana_Sulyma\Tetiana_Test\obj\Debug\netcoreapp2.2\Tetiana_Test.dll
 D:\wfolder\nedo-net\Tetiana_Sulyma\Tetiana_Test\obj\Debug\netcoreapp2.2\Tetiana_Test.pdb
+D:\wfolder\nedo-net\Tetiana_Sulyma\Tetiana_Test\obj\Debug\netcoreapp2.2\Tetiana_Test.csprojAssemblyReference.cache

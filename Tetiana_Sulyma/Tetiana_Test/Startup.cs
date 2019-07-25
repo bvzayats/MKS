@@ -22,9 +22,9 @@ namespace Tetiana_Test
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             services.AddSwaggerGen(c =>
-                {
-                    c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });
-                }
+            {
+                c.SwaggerDoc("v1", new Info { Title = "My API", Version = "v1" });
+            }
 
                 );
         }
@@ -44,7 +44,7 @@ namespace Tetiana_Test
             {
                 app.UseDeveloperExceptionPage();
 
-                
+
             }
             else
             {
@@ -55,7 +55,7 @@ namespace Tetiana_Test
             app.UseHttpsRedirection();
             app.UseMvc();
 
-           
+
 
 
         }
