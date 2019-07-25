@@ -1,18 +1,29 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+using System.Diagnostics;
+using System.Text;
 using System.Threading.Tasks;
+using AutoMapper;
 using NedoNet.API.Data.Models;
+using NedoNet.API.Entities;
+using NedoNet.API.Exceptions;
 
 namespace NedoNet.API.Services {
     public class UsersService : IUsersService {
+
+        private readonly IMapper _mapper;
+
         private readonly string _connectionString =
             "Server=(localdb)\\mssqllocaldb;Database=NedoNet;Trusted_Connection=True;";
 
+        public UsersService(IMapper mapper) {
+            _mapper = mapper;
+        }
 
-        public async Task<User> GetUserAsync(Guid id) {
-            using (SqlConnection connection = new SqlConnection(_connectionString)) {
-                var command = new SqlCommand($"SELECT * FROM USERS WHERE ID = N'{id}'", connection);
+        public async Task<UserViewEntity> GetUserAsync(Guid id) {
+            using (var connection = new SqlConnection(_connectionString)) {
+                var command = new SqlCommand($"SELECT * FROM USERS WHERE ID = N'{ id }'", connection);
                 User user = null;
 
                 await connection.OpenAsync();
@@ -21,12 +32,12 @@ namespace NedoNet.API.Services {
                     user = UserFromDataReader(dr);
                 }
 
-                return user;
+                return _mapper.Map<UserViewEntity>( user );
             }
         }
 
-        public async Task<List<User>> GetAllUsersAsync() {
-            using (SqlConnection connection = new SqlConnection(_connectionString)) {
+        public async Task<List<UserViewEntity>> GetAllUsersAsync() {
+            using (var connection = new SqlConnection(_connectionString)) {
                 var command = new SqlCommand($"SELECT * FROM USERS", connection);
                 List<User> users = new List<User>();
                 await connection.OpenAsync();
@@ -35,14 +46,71 @@ namespace NedoNet.API.Services {
                     users.Add(UserFromDataReader(dr));
                 }
 
-                return users;
+                return _mapper.Map<List<UserViewEntity>>( users );
             }
         }
 
-        private User UserFromDataReader(SqlDataReader dr)
-        {
-            return new User
-            {
+        public UserViewEntity CreateUser(CreateUserEntity userEntity) {
+            var user = _mapper.Map<User>(userEntity);
+
+            using (var connection = new SqlConnection(_connectionString)) {
+                StringBuilder commandText = new StringBuilder();
+                commandText
+                    .Append($"INSERT INTO Users (Email, Password, FirstName, LastName, PhoneNumber)")
+                    .Append($"VALUES ('{user.Email}', '{user.Password}', '{user.FirstName}', '{user.LastName}', '{user.PhoneNumber}')");
+
+                var command = new SqlCommand(commandText.ToString(), connection);
+
+                connection.Open();
+                command.ExecuteNonQuery();
+                connection.Close();
+
+                var userView = _mapper.Map<UserViewEntity>(user);
+                return userView;
+            }
+        }
+
+        public async Task<UserViewEntity> UpdateUserAsync(Guid userId, UpdateUserEntity updateUserEntity) {
+            if (await GetUserAsync( userId ) is null) {
+                throw new ItemNotFoundException($"No such user with id {userId}", userId);
+            }
+
+            var user = _mapper.Map<User>(updateUserEntity);
+
+            using (var connection = new SqlConnection(_connectionString)) {
+                var commandText = new StringBuilder();
+                commandText
+                    .Append($"UPDATE Users SET ")
+                    .Append($"Email = '{user.Email}', Password = '{user.Password}', FirstName = '{user.FirstName}', ")
+                    .Append($"LastName = '{user.LastName}', PhoneNumber = '{user.PhoneNumber}'");
+
+                commandText.Append($" WHERE Id = N'{userId}'");
+                var command = new SqlCommand(commandText.ToString(), connection);
+
+                connection.Open();
+                command.ExecuteNonQuery();
+                connection.Close();
+
+                var userView = _mapper.Map<UserViewEntity>(user);
+                return userView;
+            }
+        }
+
+        public async Task DeleteUserAsync(Guid userId) {
+            if (await GetUserAsync( userId ) is null) {
+                throw new ItemNotFoundException($"No such user with id {userId}", userId);
+            }
+
+            using (var connection = new SqlConnection(_connectionString)) {
+                var command = new SqlCommand($"DELETE FROM Users WHERE Id = N'{userId}'", connection);
+                connection.Open();
+                command.ExecuteNonQuery();
+                connection.Close();
+            }
+        }
+
+        private User UserFromDataReader(SqlDataReader dr) {
+            return new User {
                 Id = Guid.Parse(dr["Id"].ToString()),
                 Password = dr["Password"].ToString(),
                 FirstName = dr["FirstName"].ToString(),
