@@ -45,5 +45,20 @@ namespace Nedo_net.Database
             return item;
 
         }
+
+        public void Insert<T> (string query)
+        {
+            SqlDataAdapter dataAdapter = new SqlDataAdapter(query, conn);
+        }
+
+        public void Delete<T> (string query)
+        {
+            SqlDataAdapter dataAdapter = new SqlDataAdapter(query, conn);
+        }
+
+        public void Update<T>(string query)
+        {
+            SqlDataAdapter dataAdapter = new SqlDataAdapter(query, conn);
+        }
     }
 }
