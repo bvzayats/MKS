@@ -14,7 +14,7 @@ namespace Nedo_net.Controllers
     {
         SQLcommands sqlcomm = new SQLcommands();
 
-        // GET api/values
+        // GET api/Students
         [HttpGet]
         public IActionResult Get()
         {
@@ -34,7 +34,7 @@ namespace Nedo_net.Controllers
 
         }
 
-        // GET api/values/5
+        // GET api/Students/1
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
@@ -53,22 +53,46 @@ namespace Nedo_net.Controllers
             }
         }
 
-        // POST api/values
+        // POST api/Students
         [HttpPost]
-        public void Post([FromBody] string value)
+        public IActionResult Post([FromBody] Student value)
         {
+            try
+            {
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
-        // PUT api/values/5
+        // PUT api/Students/1
         [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        public IActionResult Put(int id, [FromBody] Student value)
         {
+            try
+            {
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
-        // DELETE api/values/5
+        // DELETE api/Students/1
         [HttpDelete("{id}")]
-        public void Delete(int id)
+        public IActionResult Delete(int id)
         {
+            try
+            {
+                return Ok();
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
     }
 }
