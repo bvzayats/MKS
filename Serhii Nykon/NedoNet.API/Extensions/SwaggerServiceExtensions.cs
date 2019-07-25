@@ -15,8 +15,7 @@ namespace NedoNet.API.Extensions {
             return services;
         }
 
-        public static IApplicationBuilder UseSwaggerDocumentation(this IApplicationBuilder app)
-        {
+        public static IApplicationBuilder UseSwaggerDocumentation(this IApplicationBuilder app) {
             app.UseSwagger();
             app.UseSwaggerUI(c => {
                 c.SwaggerEndpoint($"/swagger/{Version}/swagger.json", $"Versioned API {Version}");
