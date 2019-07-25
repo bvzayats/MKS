@@ -18,26 +18,18 @@ namespace NedoNet.API.Controllers
 
         [HttpGet]
         public async Task<IActionResult> GetAllUsers() {
-            try {
-                var users = await _usersService.GetAllUsersAsync();
-
-                return Ok(users);
-            }
-            catch (Exception) {
-                return StatusCode(StatusCodes.Status500InternalServerError);
-            }
+            var users = await _usersService.GetAllUsersAsync();
+            return Ok(users);
         }
 
         [HttpGet]
         [Route("{id}")]
         public async Task<IActionResult> GetUser(Guid id) {
-            try {
-                var user = await _usersService.GetUserAsync(id);
-                return Ok(user);
+            var user = await _usersService.GetUserAsync(id);
+            if (user is null) {
+                return NotFound();
             }
-            catch (Exception) {
-                return StatusCode(StatusCodes.Status500InternalServerError);
-            }
+            return Ok(user);
         }
 
         [HttpPost]
