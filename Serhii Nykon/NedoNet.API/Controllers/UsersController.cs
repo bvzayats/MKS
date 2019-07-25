@@ -27,19 +27,14 @@ namespace NedoNet.API.Controllers
             return Ok();
         }
 
-        [HttpGet]
-        public IActionResult GetUsersPage([FromQuery] int page) {
-            return Ok();
-        }
-
         [HttpPost]
-        public IActionResult CreateUser() {
+        public IActionResult CreateUser([FromBody] User user) {
             return Ok();
         }
 
         [HttpPut]
         [Route("{id}")]
-        public IActionResult UpdateUser(Guid id) {
+        public IActionResult UpdateUser(Guid id, [FromBody] User user) {
             return Ok();
         }
 
