@@ -12,8 +12,6 @@ namespace NedoNet.API.Controllers {
     public class UsersController : ControllerBase {
         private readonly IUsersService _usersService;
 
-        private static readonly string ModelIsNotValidErrorMessage = "Model is not valid";
-
         public UsersController( IUsersService usersService ) {
             _usersService = usersService;
         }
