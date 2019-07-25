@@ -69,27 +69,7 @@ namespace WebAPISwagger.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            try
-            {
-                using (UniversityContext db = new UniversityContext())
-                {
-                    var student = db.Students.Find(id);
-
-                    if (student == null)
-                    {
-                        return NotFound();
-                    }
-
-                    db.Students.Remove(student);
-                    db.SaveChanges();
-
-                    return Ok();
-                }
-            }
-            catch (Exception)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError);
-            }
+            return null;
         }
     }
 }
