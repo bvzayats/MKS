@@ -87,8 +87,6 @@ namespace Nedo_net.Controllers
         {
             try
             {
-                sqlcomm.Delete<Student>(String.Format("DELETE FROM Student WHERE Id={0}", id));
-
                 return Ok();
             }
             catch (Exception ex)
