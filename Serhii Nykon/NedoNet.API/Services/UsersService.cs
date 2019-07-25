@@ -26,7 +26,7 @@ namespace NedoNet.API.Services {
                     await connection.OpenAsync();
                     var dr = await command.ExecuteReaderAsync();
                     if (await dr.ReadAsync()) {
-                        user = CreateUser(dr);
+                        user = UserFromDataReader( dr );
                     }
 
                     return OperationResult.Success(_mapper.Map<UserViewEntity>(user));
@@ -45,7 +45,7 @@ namespace NedoNet.API.Services {
                     await connection.OpenAsync();
                     var dr = await command.ExecuteReaderAsync();
                     while (await dr.ReadAsync()) {
-                        users.Add( CreateUser( dr ) );
+                        users.Add( UserFromDataReader( dr ) );
                     }
 
                     return OperationResult.Success(_mapper.Map<List<UserViewEntity>>(users));
@@ -113,7 +113,7 @@ namespace NedoNet.API.Services {
             }
         }
 
-        private User CreateUser(SqlDataReader dr)
+        private User UserFromDataReader(SqlDataReader dr)
         {
             return new User {
                 Id = Guid.Parse(dr["Id"].ToString()),
