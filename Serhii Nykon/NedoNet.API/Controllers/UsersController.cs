@@ -10,7 +10,6 @@ namespace NedoNet.API.Controllers
     [ApiController]
     public class UsersController : ControllerBase {
         [HttpGet]
-        [Route("testUser")]
         public IActionResult GetUser() {
             return Ok( new User {
                 Id = Guid.NewGuid(),
@@ -22,7 +21,7 @@ namespace NedoNet.API.Controllers
         }
 
         [HttpGet]
-        [Route("user/{id}")]
+        [Route("{id}")]
         public IActionResult GetUser(Guid id) {
 
             return Ok();
@@ -45,6 +44,7 @@ namespace NedoNet.API.Controllers
         }
 
         [HttpDelete]
+        [Route("{id}")]
         public IActionResult DeleteUser(Guid id) {
             return NoContent();
         }
