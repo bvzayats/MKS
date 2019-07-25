@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using System.Collections.Generic;
 
 namespace Tetiana_Test.Controllers
 {
@@ -11,9 +11,9 @@ namespace Tetiana_Test.Controllers
     {
         // GET api/values
         [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        public IEnumerable<string> Get()
         {
-            return new string[] { "value1", "value2" };
+           return new string[] { "value1", "value2" };
         }
 
         // GET api/values/5
