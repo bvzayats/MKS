@@ -12,7 +12,7 @@ namespace NedoNet.API
             CreateMap<User, UserViewEntity>()
                 .ForMember(
                     dest => dest.FullName,
-                    opts => opts.MapFrom( src => src.FirstName + " " + src.LastName ) );
+                    opts => opts.MapFrom( src => $"{src.FirstName} {src.LastName}" ) );
 
             #endregion
 
