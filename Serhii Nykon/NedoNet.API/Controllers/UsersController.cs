@@ -20,5 +20,33 @@ namespace NedoNet.API.Controllers
                 PhoneNumber = "+380974925772"
             } );
         }
+
+        [HttpGet]
+        [Route("user/{id}")]
+        public IActionResult GetUser(Guid id) {
+
+            return Ok();
+        }
+
+        [HttpGet]
+        public IActionResult GetUsersPage([FromQuery] int page) {
+            return Ok();
+        }
+
+        [HttpPost]
+        public IActionResult CreateUser() {
+            return Ok();
+        }
+
+        [HttpPut]
+        [Route("{id}")]
+        public IActionResult UpdateUser(Guid id) {
+            return Ok();
+        }
+
+        [HttpDelete]
+        public IActionResult DeleteUser(Guid id) {
+            return NoContent();
+        }
     }
 }
