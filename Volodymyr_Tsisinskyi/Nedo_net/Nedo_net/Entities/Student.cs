@@ -1,11 +1,7 @@
-<<<<<<< HEAD
 ﻿using System;
 using System.Data;
 
 namespace Nedo_net.Entities
-=======
-﻿namespace Nedo_net.Entities
->>>>>>> origin/development
 {
     public class Student
     {
