@@ -55,55 +55,14 @@ namespace WebAPISwagger.Controllers
         [HttpPost]
         public IActionResult Post([FromBody] Students value)
         {
-            try
-            {
-                using (UniversityContext db = new UniversityContext())
-                {
-                    db.Students.Add(value);
-
-                    db.SaveChanges();
-
-                    return Ok();
-                }
-            }
-            catch (Exception)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError);
-            }
+            return null;
         }
 
 
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] Students value)
         {
-            try
-            {
-                using (UniversityContext db = new UniversityContext())
-                {
-                    var student = db.Students.FirstOrDefault(e => e.Id == id);
-
-                    if (student != null)
-                    {
-                        student.Name = value.Name;
-                        student.Surname = value.Surname;
-                        student.Faculty = value.Faculty;
-                        student.Course = value.Course;
-                        student.NumberHostel = value.NumberHostel;
-
-                        db.SaveChanges();
-
-                        return Ok();
-                    }
-                    else
-                    {
-                        return NotFound();
-                    }
-                }
-            }
-            catch (Exception)
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError);
-            }
+            return null;
         }
 
 
