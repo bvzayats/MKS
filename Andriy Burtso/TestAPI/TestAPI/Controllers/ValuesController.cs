@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Nedo_net.Controllers
+namespace TestAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]

@@ -89,5 +89,20 @@ namespace NedoNet.API.Controllers {
                 return StatusCode( StatusCodes.Status500InternalServerError );
             }
         }
+
+        public async Task<IActionResult> GetAllUsers() {
+            var users = await _usersService.GetAllUsersAsync();
+            return Ok(users);
+        }
+
+        [HttpGet]
+        [Route("{id}")]
+        public async Task<IActionResult> GetUser(Guid id) {
+            var user = await _usersService.GetUserAsync(id);
+            if (user is null) {
+                return NotFound();
+            }
+            return Ok(user);
+        }
     }
 }

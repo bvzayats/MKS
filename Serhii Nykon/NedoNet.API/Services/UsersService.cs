@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
+<<<<<<< .merge_file_a19176
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -21,11 +22,26 @@ namespace NedoNet.API.Services {
         public async Task<UserViewEntity> GetUserAsync( Guid id ) {
             using (SqlConnection connection = new SqlConnection( _connectionString )) {
                 var command = new SqlCommand( $"SELECT * FROM USERS WHERE ID = N'{id}'", connection );
+=======
+using System.Threading.Tasks;
+using NedoNet.API.Data.Models;
+
+namespace NedoNet.API.Services {
+    public class UsersService : IUsersService {
+        private readonly string _connectionString =
+            "Server=(localdb)\\mssqllocaldb;Database=NedoNet;Trusted_Connection=True;";
+
+
+        public async Task<User> GetUserAsync(Guid id) {
+            using (SqlConnection connection = new SqlConnection(_connectionString)) {
+                var command = new SqlCommand($"SELECT * FROM USERS WHERE ID = N'{id}'", connection);
+>>>>>>> .merge_file_a14540
                 User user = null;
 
                 await connection.OpenAsync();
                 var dr = await command.ExecuteReaderAsync();
                 if (await dr.ReadAsync()) {
+<<<<<<< .merge_file_a19176
                     user = UserFromDataReader( dr );
                 }
 
@@ -37,10 +53,23 @@ namespace NedoNet.API.Services {
             using (SqlConnection connection = new SqlConnection( _connectionString )) {
                 var command = new SqlCommand( $"EXEC sp_SelectUsersPage @PageNumber = {page}, @PageSize = 4",
                     connection );
+=======
+                    user = UserFromDataReader(dr);
+                }
+
+                return user;
+            }
+        }
+
+        public async Task<List<User>> GetAllUsersAsync() {
+            using (SqlConnection connection = new SqlConnection(_connectionString)) {
+                var command = new SqlCommand($"SELECT * FROM USERS", connection);
+>>>>>>> .merge_file_a14540
                 List<User> users = new List<User>();
                 await connection.OpenAsync();
                 var dr = await command.ExecuteReaderAsync();
                 while (await dr.ReadAsync()) {
+<<<<<<< .merge_file_a19176
                     users.Add( UserFromDataReader( dr ) );
                 }
 
@@ -97,12 +126,23 @@ namespace NedoNet.API.Services {
                 connection.Open();
                 command.ExecuteNonQuery();
                 connection.Close();
+=======
+                    users.Add(UserFromDataReader(dr));
+                }
+
+                return users;
+>>>>>>> .merge_file_a14540
             }
         }
 
         private User UserFromDataReader(SqlDataReader dr)
         {
+<<<<<<< .merge_file_a19176
             return new User {
+=======
+            return new User
+            {
+>>>>>>> .merge_file_a14540
                 Id = Guid.Parse(dr["Id"].ToString()),
                 FirstName = dr["FirstName"].ToString(),
                 LastName = dr["LastName"].ToString(),

@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Nedo_net
+namespace TestAPI
 {
     public class Startup
     {
@@ -15,16 +15,13 @@ namespace Nedo_net
 
         public IConfiguration Configuration { get; }
 
+        // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-
-            services.AddSwaggerGen(x =>
-            {
-                x.SwaggerDoc("v1", new Swashbuckle.AspNetCore.Swagger.Info { Title = "Student API", Version = "v1" });
-            });
+            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
+        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
@@ -33,21 +30,9 @@ namespace Nedo_net
             }
             else
             {
+                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }
-
-            var swaggerConfig = new Nedo_net.Configs.SwaggerConfig();
-            Configuration.GetSection(nameof(Nedo_net.Configs.SwaggerConfig)).Bind(swaggerConfig);
-
-            app.UseSwagger(option =>
-            {
-                option.RouteTemplate = swaggerConfig.JsonRoute;
-            });
-
-            app.UseSwaggerUI(option =>
-            {
-                option.SwaggerEndpoint(swaggerConfig.UiEndpoint, swaggerConfig.Description);
-            });
 
             app.UseHttpsRedirection();
             app.UseMvc();
