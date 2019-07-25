@@ -3,48 +3,48 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NedoNet.API.Data.Models;
+using NedoNet.API.Services;
 
 namespace NedoNet.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
     public class UsersController : ControllerBase {
-        [HttpGet]
-        [Route("testUser")]
-        public IActionResult GetUser() {
-            return Ok( new User {
-                Id = Guid.NewGuid(),
-                Email = "testEmail",
-                FirstName = "testFirstName",
-                LastName = "testLastName",
-                PhoneNumber = "+380974925772"
-            } );
+        private readonly IUsersService _usersService;
+
+        public UsersController( IUsersService usersService ) {
+            _usersService = usersService;
         }
 
         [HttpGet]
-        [Route("user/{id}")]
-        public IActionResult GetUser(Guid id) {
-
-            return Ok();
+        public async Task<IActionResult> GetAllUsers() {
+            var users = await _usersService.GetAllUsersAsync();
+            return Ok(users);
         }
 
         [HttpGet]
-        public IActionResult GetUsersPage([FromQuery] int page) {
-            return Ok();
+        [Route("{id}")]
+        public async Task<IActionResult> GetUser(Guid id) {
+            var user = await _usersService.GetUserAsync(id);
+            if (user is null) {
+                return NotFound();
+            }
+            return Ok(user);
         }
 
         [HttpPost]
-        public IActionResult CreateUser() {
+        public IActionResult CreateUser([FromBody] User user) {
             return Ok();
         }
 
         [HttpPut]
         [Route("{id}")]
-        public IActionResult UpdateUser(Guid id) {
+        public IActionResult UpdateUser(Guid id, [FromBody] User user) {
             return Ok();
         }
 
         [HttpDelete]
+        [Route("{id}")]
         public IActionResult DeleteUser(Guid id) {
             return NoContent();
         }
