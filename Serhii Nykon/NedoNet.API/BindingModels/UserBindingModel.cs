@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace NedoNet.API.Entities {
-    public class UserBaseEntity {
+namespace NedoNet.API.BindingModels {
+    public class UserBindingModel {
         [Required]
         [EmailAddress]
         [MaxLength(50)]
@@ -13,6 +13,10 @@ namespace NedoNet.API.Entities {
         public string Password { get; set; }
 
         [Required]
+        [Compare(nameof(Password))]
+        public string ConfirmPassword { get; set; }
+
+        [Required]
         [MaxLength(50)]
         public string FirstName { get; set; }
 
@@ -20,6 +24,7 @@ namespace NedoNet.API.Entities {
         [MaxLength(50)]
         public string LastName { get; set; }
 
+        [MaxLength(13)]
         public string PhoneNumber { get; set; }
     }
 }

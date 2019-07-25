@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
+using NedoNet.API.BindingModels;
 using NedoNet.API.Data.Models;
 using NedoNet.API.Entities;
 using NedoNet.API.Exceptions;
@@ -21,7 +22,7 @@ namespace NedoNet.API.Services {
             _mapper = mapper;
         }
 
-        public async Task<UserViewEntity> GetUserAsync(Guid id) {
+        public async Task<UserViewModel> GetUserAsync(Guid id) {
             using (var connection = new SqlConnection(_connectionString)) {
                 var command = new SqlCommand($"SELECT * FROM USERS WHERE ID = N'{ id }'", connection);
                 User user = null;
@@ -32,11 +33,11 @@ namespace NedoNet.API.Services {
                     user = UserFromDataReader(dr);
                 }
 
-                return _mapper.Map<UserViewEntity>( user );
+                return _mapper.Map<UserViewModel>( user );
             }
         }
 
-        public async Task<List<UserViewEntity>> GetAllUsersAsync() {
+        public async Task<List<UserViewModel>> GetAllUsersAsync() {
             using (var connection = new SqlConnection(_connectionString)) {
                 var command = new SqlCommand($"SELECT * FROM USERS", connection);
                 List<User> users = new List<User>();
@@ -46,12 +47,12 @@ namespace NedoNet.API.Services {
                     users.Add(UserFromDataReader(dr));
                 }
 
-                return _mapper.Map<List<UserViewEntity>>( users );
+                return _mapper.Map<List<UserViewModel>>( users );
             }
         }
 
-        public UserViewEntity CreateUser(CreateUserEntity userEntity) {
-            var user = _mapper.Map<User>(userEntity);
+        public UserViewModel CreateUser(UserBindingModel model) {
+            var user = _mapper.Map<User>(model);
 
             using (var connection = new SqlConnection(_connectionString)) {
                 StringBuilder commandText = new StringBuilder();
@@ -65,17 +66,17 @@ namespace NedoNet.API.Services {
                 command.ExecuteNonQuery();
                 connection.Close();
 
-                var userView = _mapper.Map<UserViewEntity>(user);
+                var userView = _mapper.Map<UserViewModel>(user);
                 return userView;
             }
         }
 
-        public async Task<UserViewEntity> UpdateUserAsync(Guid userId, UpdateUserEntity updateUserEntity) {
+        public async Task<UserViewModel> UpdateUserAsync(Guid userId, UserBindingModel model) {
             if (await GetUserAsync( userId ) is null) {
                 throw new ItemNotFoundException($"No such user with id {userId}", userId);
             }
 
-            var user = _mapper.Map<User>(updateUserEntity);
+            var user = _mapper.Map<User>(model);
 
             using (var connection = new SqlConnection(_connectionString)) {
                 var commandText = new StringBuilder();
@@ -91,7 +92,7 @@ namespace NedoNet.API.Services {
                 command.ExecuteNonQuery();
                 connection.Close();
 
-                var userView = _mapper.Map<UserViewEntity>(user);
+                var userView = _mapper.Map<UserViewModel>(user);
                 return userView;
             }
         }

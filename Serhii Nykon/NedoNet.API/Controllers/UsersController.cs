@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using NedoNet.API.BindingModels;
 using NedoNet.API.Data.Models;
 using NedoNet.API.Entities;
 using NedoNet.API.Exceptions;
@@ -36,7 +37,7 @@ namespace NedoNet.API.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateUser( [FromBody] CreateUserEntity userEntity ) {
+        public IActionResult CreateUser( [FromBody] UserBindingModel userEntity ) {
             if (!ModelState.IsValid) {
                 return BadRequest(ModelState);
             }
@@ -47,7 +48,7 @@ namespace NedoNet.API.Controllers
 
         [HttpPut]
         [Route( "{id}" )]
-        public async Task<IActionResult> UpdateUser( Guid id, [FromBody] UpdateUserEntity userEntity ) {
+        public async Task<IActionResult> UpdateUser( Guid id, [FromBody] UserBindingModel userEntity ) {
             if (!ModelState.IsValid) {
                 return BadRequest(ModelState);
             }
