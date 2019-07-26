@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
-namespace Tetiana_Test.Models
+﻿namespace Tetiana_Test.Models
 {
     public class MovieVodel
     {
