@@ -4,38 +4,38 @@ using System.Collections.Generic;
 
 namespace Tetiana_Test.Controllers
 {
-    [Route("fffgfhgthyhjyuj")]
+    [Route("api/movies")]
     [ApiController]
-    public class ValuesController : ControllerBase
+    public class MoviesController : ControllerBase
     {
-       // const connectionString = 
-        // GET api/values
+        // const connectionString = 
+        // GET api/movies
         [HttpGet]
         public IEnumerable<string> Get()
         {
-           return new string[] { "value1", "value2" };
+           return new string[] { "Movies" };
         }
 
-        // GET api/values/5
+        // GET api/movies/5
         [HttpGet("{id}")]
         public ActionResult<string> Get(int id)
         {
             return "value";
         }
 
-        // POST api/values
+        // POST api/movies
         [HttpPost]
         public void Post([FromBody] string value)
         {
         }
 
-        // PUT api/values/5
+        // PUT api/movies/5
         [HttpPut("{id}")]
         public void Put(int id, [FromBody] string value)
         {
         }
 
-        // DELETE api/values/5
+        // DELETE api/movies/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
