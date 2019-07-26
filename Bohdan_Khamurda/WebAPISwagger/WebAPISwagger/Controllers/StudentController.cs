@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace WebAPISwagger.Controllers
 {
+    [Route("api/[controller]")]
     [ApiController]
     public class StudentController : ControllerBase
     {
@@ -27,10 +28,27 @@ namespace WebAPISwagger.Controllers
             }
         }
 
-        [HttpGet]
+        [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
-            return null;
+            try
+            {
+                using (UniversityContext db = new UniversityContext())
+                {
+                    var student = db.Students.Find(id);
+
+                    if (student == null)
+                    {
+                        return NotFound();
+                    }
+
+                    return Ok(student);
+                }
+            }
+            catch (Exception)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError);
+            }
         }
 
 
@@ -41,14 +59,14 @@ namespace WebAPISwagger.Controllers
         }
 
 
-        [HttpPut]
+        [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] Students value)
         {
             return null;
         }
 
 
-        [HttpDelete]
+        [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
             return null;
