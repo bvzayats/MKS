@@ -34,24 +34,24 @@ namespace NedoNet.API.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateUser( [FromBody] UserBindingModel userEntity ) {
+        public IActionResult CreateUser( [FromBody] UserBindingModel model ) {
             if (!ModelState.IsValid) {
                 return BadRequest(ModelState);
             }
 
-            var user = _usersService.CreateUser(userEntity);
+            var user = _usersService.CreateUser(model);
             return Ok(user);
             }
 
         [HttpPut]
         [Route( "{id}" )]
-        public async Task<IActionResult> UpdateUser( Guid id, [FromBody] UserBindingModel userEntity ) {
+        public async Task<IActionResult> UpdateUser( Guid id, [FromBody] UserBindingModel model ) {
             if (!ModelState.IsValid) {
                 return BadRequest(ModelState);
             }
 
             try {
-                var user = await _usersService.UpdateUserAsync(id, userEntity);
+                var user = await _usersService.UpdateUserAsync(id, model);
                 return Ok(user);
             }
             catch (ItemNotFoundException e) {
