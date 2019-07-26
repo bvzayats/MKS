@@ -6,15 +6,14 @@ using System.Threading.Tasks;
 using AutoMapper;
 using NedoNet.API.BindingModels;
 using NedoNet.API.Data.Entities;
-using NedoNet.API.Models;
 using NedoNet.API.Exceptions;
+using NedoNet.API.Models;
 using NedoNet.API.Helpers;
 
 namespace NedoNet.API.Services {
     public class UsersService : IUsersService {
 
         private readonly IMapper _mapper;
-
         private readonly string _connectionString = ConnectionStringHelper.ConnectionString;
 
         public UsersService(IMapper mapper) {
@@ -33,8 +32,9 @@ namespace NedoNet.API.Services {
                 }
 
                 if (user is null) {
-                    return null;
+                    throw new ItemNotFoundException( $"User with id {id} not found" );
                 }
+                connection.Close();
 
                 return _mapper.Map<UserViewModel>( user );
             }
@@ -55,53 +55,58 @@ namespace NedoNet.API.Services {
         }
 
         public async Task<UserViewModel> CreateUser(UserBindingModel model) {
+            var user = await GetUserByEmail( model.Email );
+            if ( !(user is null) ) {
+                throw new UserEmailAlreadyExistException($"User with email {model.Email} already exist.");
+            }
+
             using (var connection = new SqlConnection(_connectionString)) {
                 StringBuilder commandText = new StringBuilder();
                 commandText
-                    .Append($"INSERT INTO Users (Email, Password, FirstName, LastName, PhoneNumber)")
+                    .Append("INSERT INTO Users (Email, Password, FirstName, LastName, PhoneNumber)")
                     .Append($"VALUES ('{model.Email}', '{model.Password}', '{model.FirstName}', '{model.LastName}', '{model.PhoneNumber}')");
 
                 var command = new SqlCommand(commandText.ToString(), connection);
 
                 connection.Open();
-                int res = await command.ExecuteNonQueryAsync();
-                if (res == 0) {
-                    throw new Exception("Can not put users to the database, please try again later");
-                }
+                await command.ExecuteNonQueryAsync();
                 connection.Close();
 
-                var userView = _mapper.Map<UserViewModel>(model);
-                return userView;
+                var userFromDb = await GetUserByEmail( model.Email );
+
+                return _mapper.Map<UserViewModel>( userFromDb );
             }
         }
 
         public async Task<UserViewModel> UpdateUserAsync(Guid userId, UserBindingModel model) {
-            if (await GetUserAsync( userId ) is null) {
-                throw new ItemNotFoundException($"No such user with id {userId}", userId);
+            var user = await GetUserAsync( userId );
+            if (user is null) {
+                throw new ItemNotFoundException($"No such user with id {userId}.");
             }
 
             using (var connection = new SqlConnection(_connectionString)) {
                 var commandText = new StringBuilder();
                 commandText
-                    .Append($"UPDATE Users SET ")
+                    .Append("UPDATE Users SET ")
                     .Append($"Email = '{model.Email}', Password = '{model.Password}', FirstName = '{model.FirstName}', ")
-                    .Append($"LastName = '{model.LastName}', PhoneNumber = '{model.PhoneNumber}'");
+                    .Append($"LastName = '{model.LastName}', PhoneNumber = '{model.PhoneNumber}'")
+                    .Append($" WHERE Id = N'{userId}'");
 
-                commandText.Append($" WHERE Id = N'{userId}'");
                 var command = new SqlCommand(commandText.ToString(), connection);
 
-                connection.Open();
-                command.ExecuteNonQuery();
+                await connection.OpenAsync();
+                await command.ExecuteNonQueryAsync();
                 connection.Close();
 
-                var userView = _mapper.Map<UserViewModel>(model);
+                var userView = _mapper.Map<UserViewModel>( model.Email );
                 return userView;
             }
         }
-
+        
         public async Task DeleteUserAsync(Guid userId) {
-            if (await GetUserAsync( userId ) is null) {
-                throw new ItemNotFoundException($"No such user with id {userId}", userId);
+            var userFromDb = await GetUserAsync( userId );
+            if (userFromDb is null) {
+                throw new ItemNotFoundException($"No such user with id '{userId}'");
             }
 
             using (var connection = new SqlConnection(_connectionString)) {
@@ -121,6 +126,25 @@ namespace NedoNet.API.Services {
                 Email = dr["Email"].ToString(),
                 PhoneNumber = dr["PhoneNumber"].ToString()
             };
+        }
+
+        private async Task<User> GetUserByEmail( string email ) {
+            using (var connection = new SqlConnection( _connectionString )) {
+                string commandText = $"SELECT * FROM Users WHERE Email = '{email}'";
+                var command = new SqlCommand( commandText, connection );
+
+                User user = null;
+
+                await connection.OpenAsync();
+                var dr = await command.ExecuteReaderAsync();
+                if (await dr.ReadAsync())
+                {
+                    user = UserFromDataReader(dr);
+                }
+
+                connection.Close();
+                return user;
+            }
         }
     }
 }

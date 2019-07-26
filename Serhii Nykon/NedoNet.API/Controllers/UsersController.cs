@@ -26,10 +26,6 @@ namespace NedoNet.API.Controllers
         [Route( "{id}" )]
         public async Task<IActionResult> GetUser( Guid id ) {
             var user = await _usersService.GetUserAsync(id);
-            if (user is null) {
-                return NotFound();
-            }
-
             return Ok( user );
         }
 
@@ -41,7 +37,7 @@ namespace NedoNet.API.Controllers
 
             var user = await _usersService.CreateUser(model);
             return Ok(user);
-            }
+        }
 
         [HttpPut]
         [Route( "{id}" )]
@@ -50,25 +46,15 @@ namespace NedoNet.API.Controllers
                 return BadRequest(ModelState);
             }
 
-            try {
-                var user = await _usersService.UpdateUserAsync(id, model);
-                return Ok(user);
-            }
-            catch (ItemNotFoundException e) {
-                return BadRequest( e );
-            }
+            var user = await _usersService.UpdateUserAsync(id, model);
+            return Ok(user);
         }
 
         [HttpDelete]
         [Route( "{id}" )]
         public async Task<IActionResult> DeleteUser( Guid id ) {
-            try {
-                await _usersService.DeleteUserAsync(id);
-                return NoContent();
-            }
-            catch (ItemNotFoundException e) {
-                return BadRequest( e );
-            }
+            await _usersService.DeleteUserAsync(id);
+            return NoContent();
         }
     }
 }

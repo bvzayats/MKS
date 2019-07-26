@@ -1,11 +1,8 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
 
 namespace NedoNet.API.Exceptions {
-    public class ItemNotFoundException : Exception {
-        public ItemNotFoundException(string message, Guid id) : base(message) {
-            Id = id;
+    public class ItemNotFoundException : CustomExceptionBase {
+        public ItemNotFoundException( string message, object body = null) : base( message, body, StatusCodes.Status404NotFound ) {
         }
-
-        public Guid Id { get; set; }
     }
 }

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
+using NedoNet.API.Exceptions;
 using NedoNet.API.Extensions;
 using NedoNet.API.Services;
 
@@ -32,6 +33,7 @@ namespace NedoNet.API {
             }
 
             app.UseSwaggerDocumentation();
+            app.UseMiddleware<ExceptionMiddleware>();
 
             app.UseMvc(routes => {
                 routes.MapRoute(
