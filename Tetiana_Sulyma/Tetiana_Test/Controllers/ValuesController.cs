@@ -4,10 +4,11 @@ using System.Collections.Generic;
 
 namespace Tetiana_Test.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("fffgfhgthyhjyuj")]
     [ApiController]
     public class ValuesController : ControllerBase
     {
+       // const connectionString = 
         // GET api/values
         [HttpGet]
         public IEnumerable<string> Get()
