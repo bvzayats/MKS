@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace NedoNet.API.Data.Models {
+namespace NedoNet.API.Data.Entities {
     public class User {
         public Guid Id { get; set; }
         public string Email { get; set; }
