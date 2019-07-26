@@ -1,6 +1,6 @@
 ﻿namespace Tetiana_Test.Models
 {
-    public class MovieVodel
+    public class MovieModel
     {
         public int Id { get; set; }
         public int Year { get; set; }
