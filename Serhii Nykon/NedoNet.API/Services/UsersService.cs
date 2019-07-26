@@ -54,7 +54,7 @@ namespace NedoNet.API.Services {
             }
         }
 
-        public UserViewModel CreateUser(UserBindingModel model) {
+        public async Task<UserViewModel> CreateUser(UserBindingModel model) {
             using (var connection = new SqlConnection(_connectionString)) {
                 StringBuilder commandText = new StringBuilder();
                 commandText
@@ -64,7 +64,7 @@ namespace NedoNet.API.Services {
                 var command = new SqlCommand(commandText.ToString(), connection);
 
                 connection.Open();
-                int res = command.ExecuteNonQuery();
+                int res = await command.ExecuteNonQueryAsync();
                 if (res == 0) {
                     throw new Exception("Can not put users to the database, please try again later");
                 }

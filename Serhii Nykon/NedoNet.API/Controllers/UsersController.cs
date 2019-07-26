@@ -34,12 +34,12 @@ namespace NedoNet.API.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateUser( [FromBody] UserBindingModel model ) {
+        public async Task<IActionResult> CreateUser( [FromBody] UserBindingModel model ) {
             if (!ModelState.IsValid) {
                 return BadRequest(ModelState);
             }
 
-            var user = _usersService.CreateUser(model);
+            var user = await _usersService.CreateUser(model);
             return Ok(user);
             }
 
