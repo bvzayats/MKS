@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 using NedoNet.API.BindingModels;
-using NedoNet.API.Data.Models;
-using NedoNet.API.Entities;
+using NedoNet.API.Data.Entities;
+using NedoNet.API.Models;
 
 namespace NedoNet.API
 {

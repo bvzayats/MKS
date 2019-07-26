@@ -5,8 +5,8 @@ using System.Text;
 using System.Threading.Tasks;
 using AutoMapper;
 using NedoNet.API.BindingModels;
-using NedoNet.API.Data.Models;
-using NedoNet.API.Entities;
+using NedoNet.API.Data.Entities;
+using NedoNet.API.Models;
 using NedoNet.API.Exceptions;
 using NedoNet.API.Helpers;
 

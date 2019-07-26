@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using NedoNet.API.BindingModels;
-using NedoNet.API.Entities;
+using NedoNet.API.Models;
 
 namespace NedoNet.API.Services {
     public interface IUsersService {

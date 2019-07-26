@@ -1,4 +1,4 @@
-﻿namespace NedoNet.API.Entities {
+﻿namespace NedoNet.API.Models {
     public class UserViewModel {
         public string Email { get; set; }
         public string FullName { get; set; }
