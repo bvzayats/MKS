@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using Nedo_net.Entities;
 using Nedo_net.Database;
-using System.Linq;
 using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
 
@@ -22,7 +21,6 @@ namespace Nedo_net.Controllers
             try
             {
                 string result = JsonConvert.SerializeObject(sqlcomm.SelectAll(), Formatting.Indented);
-                
                 return Ok(result);
             }
             catch (Exception ex)
@@ -42,7 +40,6 @@ namespace Nedo_net.Controllers
                 student = sqlcomm.Select(id);
 
                 string result = JsonConvert.SerializeObject(new { id, student }, Formatting.Indented);
-
                 return Ok(result);
             }
             catch (Exception ex)
@@ -63,11 +60,9 @@ namespace Nedo_net.Controllers
                     throw new ValidationException();
 
                 int id = sqlcomm.SelectAll().Count + 1;
-
                 sqlcomm.Insert(id, value);
 
                 string result = JsonConvert.SerializeObject(new { id, value }, Formatting.Indented);
-
                 return Ok(result);
             }
             catch (Exception ex)
