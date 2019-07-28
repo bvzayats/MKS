@@ -1,5 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
+using System.Linq;
+using TestAPI.Models;
+using Newtonsoft.Json;
 
 namespace TestAPI.Controllers
 {
@@ -7,24 +11,35 @@ namespace TestAPI.Controllers
     [ApiController]
     public class ValuesController : ControllerBase
     {
+        private readonly UserService _userService;
+        public ValuesController()
+        {
+
+            _userService = new UserService();
+        }
+
         // GET api/values
         [HttpGet]
-        public ActionResult<IEnumerable<string>> Get()
+        public IActionResult Get()
         {
-            return new string[] { "value1", "value2" };
+            //UserService userService = new UserService();
+            return Ok(_userService.GetList().ToList());
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
-        public ActionResult<string> Get(int id)
+        public IActionResult GetbyId(int id)
         {
-            return "value";
+            
+            return Ok(_userService.GetById(id));
+            
         }
-
         // POST api/values
         [HttpPost]
-        public void Post([FromBody] string value)
+        public IActionResult Post([FromBody] User value)
         {
+            _userService.Create(value);
+            return Ok();
         }
 
         // PUT api/values/5

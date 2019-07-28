@@ -22,10 +22,12 @@ namespace TestAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-            services.AddEntityFrameworkNpgsql().AddDbContext<TestAPIContext>(opt => opt.UseNpgsql(Configuration.GetConnectionString("TestAPIConnection")));
+           // services.AddEntityFrameworkNpgsql().AddDbContext<TestAPIContext>(opt => opt.UseNpgsql(Configuration.GetConnectionString("TestAPIConnection")));
             services.AddSwaggerGen(c =>
            {
                c.SwaggerDoc("v1", new Info { Title = "Core API", Description = "My Core API" });
+               //var XmlPath = System.AppDomain.CurrentDomain.BaseDirectory + @"TestAPI.xml";
+               //c.IncludeXmlComments(XmlPath);
            }
                 );
         }
