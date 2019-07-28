@@ -12,12 +12,15 @@ namespace Nedo_net.Database
         public SQLcommands()
         {
             conn = DBUtils.GetDBConnection();
-            conn.Open();
         }
 
         public IEnumerable<T> SelectAll<T>(string query)
         {
-            SqlDataAdapter dataAdapter = new SqlDataAdapter(query, conn);
+            conn.Open();
+            SqlDataAdapter dataAdapter = new SqlDataAdapter();
+            dataAdapter.SelectCommand = new SqlCommand(query, conn);
+            dataAdapter.SelectCommand.ExecuteNonQuery();
+            conn.Close();
 
             var dataTable = new DataTable();
             dataAdapter.Fill(dataTable);
@@ -35,7 +38,11 @@ namespace Nedo_net.Database
 
         public T Select<T>(string query)
         {
-            SqlDataAdapter dataAdapter = new SqlDataAdapter(query, conn);
+            conn.Open();
+            SqlDataAdapter dataAdapter = new SqlDataAdapter();
+            dataAdapter.SelectCommand = new SqlCommand(query, conn);
+            dataAdapter.SelectCommand.ExecuteNonQuery();
+            conn.Close();
 
             var dataTable = new DataTable();
             dataAdapter.Fill(dataTable);
@@ -43,7 +50,34 @@ namespace Nedo_net.Database
             T item = (T)Activator.CreateInstance(typeof(T), dataTable.Rows[0]);
 
             return item;
-
         }
+
+        public void Insert<T>(string query)
+        {
+            conn.Open();
+            SqlDataAdapter dataAdapter = new SqlDataAdapter();
+            dataAdapter.InsertCommand = new SqlCommand(query, conn);
+            dataAdapter.InsertCommand.ExecuteNonQuery();
+            conn.Close();
+        }
+
+        public void Update<T>(string query)
+        {
+            conn.Open();
+            SqlDataAdapter dataAdapter = new SqlDataAdapter();
+            dataAdapter.UpdateCommand = new SqlCommand(query, conn);
+            dataAdapter.UpdateCommand.ExecuteNonQuery();
+            conn.Close();
+        }
+
+        public void Delete<T>(string query)
+        {
+            conn.Open();
+            SqlDataAdapter dataAdapter = new SqlDataAdapter();
+            dataAdapter.DeleteCommand = new SqlCommand(query, conn);
+            dataAdapter.DeleteCommand.ExecuteNonQuery();
+            conn.Close();
+        }
+
     }
 }
