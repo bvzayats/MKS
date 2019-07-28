@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using NedoNet.API.Data.Models;
+using NedoNet.API.BindingModels;
+using NedoNet.API.Exceptions;
 using NedoNet.API.Services;
 
 namespace NedoNet.API.Controllers
@@ -19,33 +19,41 @@ namespace NedoNet.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllUsers() {
             var users = await _usersService.GetAllUsersAsync();
-            return Ok(users);
+            return Ok( users );
         }
 
         [HttpGet]
-        [Route("{id}")]
-        public async Task<IActionResult> GetUser(Guid id) {
+        [Route( "{id}" )]
+        public async Task<IActionResult> GetUser( Guid id ) {
             var user = await _usersService.GetUserAsync(id);
-            if (user is null) {
-                return NotFound();
-            }
-            return Ok(user);
+            return Ok( user );
         }
 
         [HttpPost]
-        public IActionResult CreateUser([FromBody] User user) {
-            return Ok();
+        public async Task<IActionResult> CreateUser( [FromBody] UserBindingModel model ) {
+            if (!ModelState.IsValid) {
+                return BadRequest(ModelState);
+            }
+
+            var user = await _usersService.CreateUser(model);
+            return Ok(user);
         }
 
         [HttpPut]
-        [Route("{id}")]
-        public IActionResult UpdateUser(Guid id, [FromBody] User user) {
-            return Ok();
+        [Route( "{id}" )]
+        public async Task<IActionResult> UpdateUser( Guid id, [FromBody] UserBindingModel model ) {
+            if (!ModelState.IsValid) {
+                return BadRequest(ModelState);
+            }
+
+            var user = await _usersService.UpdateUserAsync(id, model);
+            return Ok(user);
         }
 
         [HttpDelete]
-        [Route("{id}")]
-        public IActionResult DeleteUser(Guid id) {
+        [Route( "{id}" )]
+        public async Task<IActionResult> DeleteUser( Guid id ) {
+            await _usersService.DeleteUserAsync(id);
             return NoContent();
         }
     }

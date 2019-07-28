@@ -1,11 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using NedoNet.API.Data.Models;
+using NedoNet.API.BindingModels;
+using NedoNet.API.Models;
 
 namespace NedoNet.API.Services {
     public interface IUsersService {
-        Task<User> GetUserAsync( Guid id );
-        Task<List<User>> GetAllUsersAsync(  );
+        Task<List<UserViewModel>> GetAllUsersAsync(  );
+        Task<UserViewModel> GetUserAsync(Guid id);
+        Task<UserViewModel> CreateUser(UserBindingModel model);
+        Task<UserViewModel> UpdateUserAsync(Guid userId, UserBindingModel model);
+        Task DeleteUserAsync(Guid userId);
     }
 }
