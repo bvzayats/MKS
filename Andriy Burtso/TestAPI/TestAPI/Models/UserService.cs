@@ -35,10 +35,8 @@ namespace TestAPI.Models
                 connection.Open();
                 SqlCommand command = new SqlCommand(sqlExpression, connection);
                 SqlDataReader reader = command.ExecuteReader();
-                
                 List<User> allUsers = new List<User>();
                 User user;
-                
                 while (reader.Read())
                 {
                     user = new User();
@@ -52,8 +50,6 @@ namespace TestAPI.Models
                 reader.Close();
                 return allUsers;
             }
-            
-
         }
 
         public User GetById(int id)
@@ -65,7 +61,6 @@ namespace TestAPI.Models
                 connection.Open();
                 SqlCommand command = new SqlCommand(sqlExpression, connection);
                 SqlDataReader reader = command.ExecuteReader();
-                
                 while (reader.Read())
                 {
                         user.Id = (int)reader.GetValue(0);
@@ -75,10 +70,8 @@ namespace TestAPI.Models
                         user.Age = (int)reader.GetValue(4);
                 }
                 reader.Close();
-                
             }
             return user;
         }
-        
     }
 }

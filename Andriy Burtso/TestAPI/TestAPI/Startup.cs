@@ -1,10 +1,8 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using TestAPI.Models;
 using Swashbuckle.AspNetCore.Swagger;
 
 namespace TestAPI
@@ -22,12 +20,9 @@ namespace TestAPI
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
-           // services.AddEntityFrameworkNpgsql().AddDbContext<TestAPIContext>(opt => opt.UseNpgsql(Configuration.GetConnectionString("TestAPIConnection")));
             services.AddSwaggerGen(c =>
            {
                c.SwaggerDoc("v1", new Info { Title = "Core API", Description = "My Core API" });
-               //var XmlPath = System.AppDomain.CurrentDomain.BaseDirectory + @"TestAPI.xml";
-               //c.IncludeXmlComments(XmlPath);
            }
                 );
         }

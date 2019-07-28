@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using TestAPI.Models;
-using Newtonsoft.Json;
+
 
 namespace TestAPI.Controllers
 {
@@ -22,7 +20,6 @@ namespace TestAPI.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            //UserService userService = new UserService();
             return Ok(_userService.GetList().ToList());
         }
 
