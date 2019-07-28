@@ -1,5 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Linq;
 using TestAPI.Models;
 
 
@@ -7,10 +6,10 @@ namespace TestAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ValuesController : ControllerBase
+    public class UsersController : ControllerBase
     {
         private readonly UserService _userService;
-        public ValuesController()
+        public UsersController()
         {
 
             _userService = new UserService();
@@ -20,7 +19,7 @@ namespace TestAPI.Controllers
         [HttpGet]
         public IActionResult Get()
         {
-            return Ok(_userService.GetList().ToList());
+            return Ok(_userService.GetList());
         }
 
         // GET api/values/5
