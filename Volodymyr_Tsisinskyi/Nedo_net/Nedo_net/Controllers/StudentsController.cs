@@ -5,6 +5,7 @@ using Nedo_net.Entities;
 using Nedo_net.Database;
 using System.Linq;
 using Newtonsoft.Json;
+using System.ComponentModel.DataAnnotations;
 
 namespace Nedo_net.Controllers
 {
@@ -63,6 +64,11 @@ namespace Nedo_net.Controllers
         {
             try
             {
+                var validationResults = new List<ValidationResult>();
+                var validationContext = new ValidationContext(value);
+                if (!Validator.TryValidateObject(value, validationContext, validationResults, true))
+                    throw new ValidationException();
+
                 List<Student> students = new List<Student>();
                 students = sqlcomm.SelectAll<Student>("SELECT * FROM Student").ToList();
 
@@ -87,6 +93,11 @@ namespace Nedo_net.Controllers
         {
             try
             {
+                var validationResults = new List<ValidationResult>();
+                var validationContext = new ValidationContext(value);
+                if (!Validator.TryValidateObject(value, validationContext, validationResults, true))
+                    throw new ValidationException();
+
                 sqlcomm.Update<Student>(String.Format("UPDATE Student SET FName = '{0}', LName = '{1}', IsGranted = {2}, Email = '{3}' WHERE Id = {4}",
                                                                                     value.FName, value.LName, value.IsGranted? 1 : 0, value.Email, id));
 

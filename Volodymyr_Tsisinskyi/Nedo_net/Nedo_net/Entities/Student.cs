@@ -1,12 +1,18 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.Data;
 
 namespace Nedo_net.Entities
 {
     public class Student
     {
+        [Required]
+        [StringLength(50)]
         public string FName { get; set; }
+        [Required]
+        [StringLength(50)]
         public string LName { get; set; }
+        [Required]
         public bool IsGranted { get; set; }
         public string Email { get; set; }
 
