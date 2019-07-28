@@ -21,14 +21,7 @@ namespace Nedo_net.Controllers
         {
             try
             {
-                List<Student> students = new List<Student>();
-                students = sqlcomm.SelectAll<Student>("SELECT * FROM Student").ToList();
-
-                Dictionary<int, Student> _result = new Dictionary<int, Student>();
-                for (int i = 0; i < students.Count; i++)
-                    _result.Add(i + 1, students[i]);
-
-                string result = JsonConvert.SerializeObject(_result, Formatting.Indented);
+                string result = JsonConvert.SerializeObject(sqlcomm.SelectAll(), Formatting.Indented);
                 
                 return Ok(result);
             }
@@ -46,7 +39,7 @@ namespace Nedo_net.Controllers
             try
             {
                 Student student = new Student();
-                student = sqlcomm.Select<Student>(String.Format("SELECT * FROM Student WHERE Id = {0}", id));
+                student = sqlcomm.Select(id);
 
                 string result = JsonConvert.SerializeObject(new { id, student }, Formatting.Indented);
 
@@ -69,13 +62,9 @@ namespace Nedo_net.Controllers
                 if (!Validator.TryValidateObject(value, validationContext, validationResults, true))
                     throw new ValidationException();
 
-                List<Student> students = new List<Student>();
-                students = sqlcomm.SelectAll<Student>("SELECT * FROM Student").ToList();
+                int id = sqlcomm.SelectAll().Count + 1;
 
-                sqlcomm.Insert<Student>(String.Format("INSERT INTO dbo.Student (Id, FName, LName, IsGranted, Email) VALUES ({0}, '{1}', '{2}', {3}, '{4}')",
-                                                                   students.Count + 1, value.FName, value.LName, value.IsGranted ? 1 : 0, value.Email));
-
-                int id = students.Count + 1;
+                sqlcomm.Insert(id, value);
 
                 string result = JsonConvert.SerializeObject(new { id, value }, Formatting.Indented);
 
@@ -98,8 +87,7 @@ namespace Nedo_net.Controllers
                 if (!Validator.TryValidateObject(value, validationContext, validationResults, true))
                     throw new ValidationException();
 
-                sqlcomm.Update<Student>(String.Format("UPDATE Student SET FName = '{0}', LName = '{1}', IsGranted = {2}, Email = '{3}' WHERE Id = {4}",
-                                                                                    value.FName, value.LName, value.IsGranted? 1 : 0, value.Email, id));
+                sqlcomm.Update(id, value);
 
                 return Ok();
             }
@@ -115,7 +103,7 @@ namespace Nedo_net.Controllers
         {
             try
             {
-                sqlcomm.Delete<Student>(String.Format("DELETE FROM Student WHERE Id = {0}", id));
+                sqlcomm.Delete(id);
 
                 return Ok();
             }
