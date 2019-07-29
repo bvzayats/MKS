@@ -50,10 +50,7 @@ namespace Festival.Controllers
         [HttpPost]
         public async Task<ActionResult<Band>> PostBand(Band band)
         {
-            _context.Bands.Add(band);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetBand", new { id = band.Id }, band);
+            return Ok();
         }
 
         // DELETE: api/Bands/5
