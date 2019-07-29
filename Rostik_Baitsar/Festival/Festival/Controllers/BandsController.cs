@@ -20,14 +20,14 @@ namespace Festival.Controllers
 
         // GET: api/Bands
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Band>>> GetBands()
+        public async Task<IActionResult> GetBands()
         {
-            return await _context.Bands.ToListAsync();
+            return Ok(await _context.Bands.ToListAsync());
         }
 
         // GET: api/Bands/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Band>> GetBand(int id)
+        public async Task<IActionResult> GetBand(int id)
         {
             var band = await _context.Bands.FindAsync(id);
 
@@ -36,7 +36,7 @@ namespace Festival.Controllers
                 return NotFound();
             }
 
-            return band;
+            return Ok(band);
         }
 
         // PUT: api/Bands/5
@@ -81,7 +81,7 @@ namespace Festival.Controllers
 
         // DELETE: api/Bands/5
         [HttpDelete("{id}")]
-        public async Task<ActionResult<Band>> DeleteBand(int id)
+        public async Task<IActionResult> DeleteBand(int id)
         {
             var band = await _context.Bands.FindAsync(id);
             if (band == null)
@@ -92,7 +92,7 @@ namespace Festival.Controllers
             _context.Bands.Remove(band);
             await _context.SaveChangesAsync();
 
-            return band;
+            return Ok(band);
         }
 
         private bool BandExists(int id)
