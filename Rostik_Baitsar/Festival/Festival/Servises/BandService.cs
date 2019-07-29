@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Festival.Servises
 {
-    public class BandService
+    public class BandService : IBandService
     {
         private readonly BandContext _context;
 

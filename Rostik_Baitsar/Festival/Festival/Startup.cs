@@ -1,4 +1,5 @@
 ﻿using Festival.Models;
+using Festival.Servises;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -24,6 +25,7 @@ namespace Festival
             string connection = Configuration.GetConnectionString("DefaultConnection");
             services.AddDbContext<BandContext>(options => options.UseSqlServer(connection));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddScoped<IBandService, BandService>();
 
             services.AddSwaggerGen(x =>
             {

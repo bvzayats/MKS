@@ -12,10 +12,10 @@ namespace Festival.Controllers
     [ApiController]
     public class BandsController : ControllerBase
     {
-        private readonly BandService _bandService;
-        public BandsController(BandContext context)
+        private readonly IBandService _bandService;
+        public BandsController(IBandService service)
         {
-            _bandService = new BandService(context);
+            _bandService = service;
         }
 
         // GET: api/Bands
