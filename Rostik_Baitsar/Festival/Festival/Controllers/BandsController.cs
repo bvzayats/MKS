@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Festival.Models;
+using Festival.Servises;
 
 namespace Festival.Controllers
 {
@@ -11,31 +12,28 @@ namespace Festival.Controllers
     [ApiController]
     public class BandsController : ControllerBase
     {
-        private readonly BandContext _context;
-
+        private readonly BandService _bandService;
         public BandsController(BandContext context)
         {
-            _context = context;
+            _bandService = new BandService(context);
         }
 
         // GET: api/Bands
         [HttpGet]
         public async Task<IActionResult> GetBands()
         {
-            return Ok(await _context.Bands.ToListAsync());
+            return Ok(_bandService.GetBands());
         }
 
         // GET: api/Bands/5
         [HttpGet("{id}")]
         public async Task<IActionResult> GetBand(int id)
         {
-            var band = await _context.Bands.FindAsync(id);
-
+            var band = await _bandService.GetBand(id);
             if (band == null)
             {
                 return NotFound();
             }
-
             return Ok(band);
         }
 
