@@ -7,7 +7,7 @@ using Festival.Models;
 
 namespace Festival.Controllers
 {
-    [Route("api/[controller]")]
+    [Route("api")]
     [ApiController]
     public class BandsController : ControllerBase
     {
@@ -43,30 +43,7 @@ namespace Festival.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutBand(int id, Band band)
         {
-            if (id != band.Id)
-            {
-                return BadRequest();
-            }
-
-            _context.Entry(band).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!BandExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return NoContent();
+            return Ok();
         }
 
         // POST: api/Bands
@@ -83,16 +60,7 @@ namespace Festival.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteBand(int id)
         {
-            var band = await _context.Bands.FindAsync(id);
-            if (band == null)
-            {
-                return NotFound();
-            }
-
-            _context.Bands.Remove(band);
-            await _context.SaveChangesAsync();
-
-            return Ok(band);
+            return Ok();
         }
 
         private bool BandExists(int id)
