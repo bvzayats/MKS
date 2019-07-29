@@ -1,8 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using Tetiana_Test.Models;
-using Tetiana_Test.Services;
-
 
 namespace Tetiana_Test.Controllers
 {
@@ -17,7 +15,7 @@ namespace Tetiana_Test.Controllers
             List<MovieModel> movieModel = Tetiana_Test.Services.Services.Get();
             return Ok(movieModel);
                    
-         }
+        }
 
         // GET api/movies/5
         [HttpGet("{id}")]
