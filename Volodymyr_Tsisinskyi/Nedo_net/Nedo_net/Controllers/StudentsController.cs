@@ -54,9 +54,7 @@ namespace Nedo_net.Controllers
         {
             try
             {
-                var validationResults = new List<ValidationResult>();
-                var validationContext = new ValidationContext(value);
-                if (!Validator.TryValidateObject(value, validationContext, validationResults, true))
+                if (ModelState.IsValid)
                     throw new ValidationException();
 
                 int id = sqlcomm.SelectAll().Count + 1;
@@ -77,9 +75,7 @@ namespace Nedo_net.Controllers
         {
             try
             {
-                var validationResults = new List<ValidationResult>();
-                var validationContext = new ValidationContext(value);
-                if (!Validator.TryValidateObject(value, validationContext, validationResults, true))
+                if (ModelState.IsValid)
                     throw new ValidationException();
 
                 sqlcomm.Update(id, value);
