@@ -57,10 +57,5 @@ namespace Festival.Controllers
         {
             return Ok();
         }
-
-        private bool BandExists(int id)
-        {
-            return _context.Bands.Any(e => e.Id == id);
-        }
     }
 }
