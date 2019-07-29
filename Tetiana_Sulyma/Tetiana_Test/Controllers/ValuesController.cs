@@ -1,6 +1,8 @@
-﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using System.Data.SqlClient;
+using Tetiana_Test.Models;
+using System;
 
 namespace Tetiana_Test.Controllers
 {
@@ -8,13 +10,52 @@ namespace Tetiana_Test.Controllers
     [ApiController]
     public class MoviesController : ControllerBase
     {
-        // const connectionString = 
+        
         // GET api/movies
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IEnumerable<MovieModel> Get()
         {
-           return new string[] { "Movies" };
-        }
+            string connString = @"Data Source=DESKTOP-9D62NQR\SQL2017;Database=Films;Integrated Security=True";
+            string query = "SELECT * from Movies";
+            var movieModels = new List<MovieModel>();
+            using (SqlConnection connection =
+              new SqlConnection(connString))
+            {
+                SqlCommand command =
+                    new SqlCommand(query, connection);
+                connection.Open();
+
+                SqlDataReader reader = command.ExecuteReader();
+               
+               
+                while (reader.Read())
+                {
+
+                    movieModels.Add(new MovieModel
+                    {
+                        Id = Int32.Parse(reader[0].ToString()),
+                        Title = reader[1].ToString(),
+                        Year = Int32.Parse(reader[2].ToString()),
+                        Genre = reader[3].ToString(),
+                        Country = reader[4].ToString(),
+                        IMDb = Convert.ToSingle(reader[5].ToString()),
+                        Critical_acclaim = reader[6].ToString(),
+
+
+                });
+            }
+
+                
+                reader.Close();
+            }
+
+           
+            return movieModels;
+                
+                
+        
+
+    }
 
         // GET api/movies/5
         [HttpGet("{id}")]
