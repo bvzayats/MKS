@@ -5,7 +5,7 @@ using Festival.Servises;
 
 namespace Festival.Controllers
 {
-    [Route("api")]
+    [Route("api/[controller]")]
     [ApiController]
     public class BandsController : ControllerBase
     {
