@@ -23,12 +23,7 @@ namespace Festival.Servises
 
         public async Task<Band> GetBand(int id)
         {
-            var band = await _context.Bands.FindAsync(id);
-
-            if (band == null)
-            {
-                return null;
-            }
+            var band = await _context.Bands.FindAsync(id)
 
             return band;
         }
