@@ -13,16 +13,17 @@ namespace Festival.Controllers
     public class BandsController : ControllerBase
     {
         private readonly IBandService _bandService;
-        public BandsController(IBandService service)
+        public BandsController(IBandService bandService)
         {
-            _bandService = service;
+            _bandService = bandService;
         }
 
         // GET: api/Bands
         [HttpGet]
         public async Task<IActionResult> GetBands()
         {
-            return Ok(_bandService.GetBands());
+            var band = await _bandService.GetBands();
+            return Ok(band);
         }
 
         // GET: api/Bands/5
@@ -46,7 +47,7 @@ namespace Festival.Controllers
 
         // POST: api/Bands
         [HttpPost]
-        public async Task<ActionResult<Band>> PostBand(Band band)
+        public async Task<IActionResult> PostBand(Band band)
         {
             return Ok();
         }
