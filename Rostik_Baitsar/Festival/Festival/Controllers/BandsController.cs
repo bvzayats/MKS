@@ -63,7 +63,7 @@ namespace Festival.Controllers
         {
             _bandService.DeleteBand(id);
 
-            return Ok();
+            return NoContent();
         }
     }
 }
