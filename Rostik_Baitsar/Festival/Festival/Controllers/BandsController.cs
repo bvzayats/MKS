@@ -40,9 +40,9 @@ namespace Festival.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutBand(int id, Band band)
         {
-            var _band = await _bandService.PutBand(id, band);
+            var localBand = await _bandService.PutBand(id, band);
 
-            if (_band == null)
+            if (localBand == null)
                 return BadRequest();
 
             return Ok(band);
@@ -52,19 +52,18 @@ namespace Festival.Controllers
         [HttpPost]
         public async Task<IActionResult> PostBand(Band band)
         {
-            return Ok(await _bandService.PostBand(band));
+            var localBand = await _bandService.PostBand(band);
+
+            return Ok(localBand);
         }
 
         // DELETE: api/Bands/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteBand(int id)
         {
-            var band = await _bandService.DeleteBand(id);
+            _bandService.DeleteBand(id);
 
-            if (band == null)
-                return NotFound();
-
-            return Ok(band);
+            return Ok();
         }
     }
 }
