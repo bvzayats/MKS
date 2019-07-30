@@ -40,9 +40,12 @@ namespace Festival.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutBand(int id, Band band)
         {
-            
+            var _band = await _bandService.PutBand(id, band);
 
-            return NoContent();
+            if (_band == null)
+                return BadRequest();
+
+            return Ok(band);
         }
 
         // POST: api/Bands

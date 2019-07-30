@@ -26,10 +26,26 @@ namespace Festival.Servises
             return band;
         }
 
-        //public async Task<Band> PutBand(int id, Band band)
-        //{
-        //    //TO DO
-        //}
+        public async Task<Band> PutBand(int id, Band band)
+        {
+            if (id != band.Id)
+            {
+                return null;
+            }
+
+            _context.Entry(band).State = EntityState.Modified;
+
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                return null;
+            }
+
+            return band;
+        }
 
         public async Task<Band> PostBand(Band band)
         {
