@@ -2,7 +2,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Festival.Models;
 using Festival.Servises;
-using Microsoft.EntityFrameworkCore;
 using AutoMapper;
 
 namespace Festival.Controllers
