@@ -12,19 +12,5 @@ namespace Festival.Models
         public string Nationality { get; set; }
         public DateTime PerformanceTime { get; set; }
         public int? Fee { get; set; }
-
-        public static Band ConvertToEntity(BandDTO bandDTO)
-        {
-            Band band = new Band()
-            {
-                Id              = bandDTO.Id,
-                Name            = bandDTO.Name,
-                Nationality     = bandDTO.Nationality,
-                PerformanceTime = bandDTO.PerformanceTime,
-                Fee             = bandDTO.Fee
-            };
-
-            return band;
-        }
     }
 }

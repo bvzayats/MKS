@@ -55,12 +55,12 @@ namespace Festival.Servises
             return band;
         }
 
-        public void DeleteBand(int id)
+        public async void DeleteBand(int id)
         {
             var band = _context.Bands.Find(id);
 
             _context.Bands.Remove(band);
-            _context.SaveChangesAsync();
+            await _context.SaveChangesAsync();
         }
 
     }
