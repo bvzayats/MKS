@@ -25,5 +25,18 @@ namespace Festival.Servises
 
             return band;
         }
+
+        //public async Task<Band> PutBand(int id, Band band)
+        //{
+        //    //TO DO
+        //}
+
+        public async Task<Band> PostBand(Band band)
+        {
+            _context.Bands.Add(band);
+            await _context.SaveChangesAsync();
+
+            return band;
+        }
     }
 }

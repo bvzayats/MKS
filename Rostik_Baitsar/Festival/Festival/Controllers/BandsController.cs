@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Festival.Models;
 using Festival.Servises;
+using Microsoft.EntityFrameworkCore;
 
 namespace Festival.Controllers
 {
@@ -39,21 +40,23 @@ namespace Festival.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutBand(int id, Band band)
         {
-            return Ok();
+            
+
+            return NoContent();
         }
 
         // POST: api/Bands
         [HttpPost]
         public async Task<IActionResult> PostBand(Band band)
         {
-            return Ok();
+            return Ok(await _bandService.PostBand(band));
         }
 
         // DELETE: api/Bands/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteBand(int id)
         {
-            return Ok();
+            return NotFound();
         }
     }
 }
