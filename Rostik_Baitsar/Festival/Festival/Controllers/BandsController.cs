@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Festival.Models;
 using Festival.Servises;
 using Microsoft.EntityFrameworkCore;
+using AutoMapper;
 
 namespace Festival.Controllers
 {
@@ -11,9 +12,11 @@ namespace Festival.Controllers
     public class BandsController : ControllerBase
     {
         private readonly IBandService _bandService;
-        public BandsController(IBandService bandService)
+        private readonly IMapper _mapper;
+        public BandsController(IBandService bandService, IMapper mapper)
         {
             _bandService = bandService;
+            _mapper = mapper;
         }
 
         // GET: api/Bands
@@ -40,7 +43,8 @@ namespace Festival.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutBand(int id, BandDTO bandDTO)
         {
-            var localBand = await _bandService.PutBand(id, BandDTO.ConvertToEntity(bandDTO));
+            var band = _mapper.Map<Band>(bandDTO);
+            var localBand = await _bandService.PutBand(id, band);
 
             if (localBand == null)
                 return BadRequest();
@@ -52,7 +56,8 @@ namespace Festival.Controllers
         [HttpPost]
         public async Task<IActionResult> PostBand(BandDTO bandDTO)
         {
-            var localBand = await _bandService.PostBand(BandDTO.ConvertToEntity(bandDTO));
+            var band = _mapper.Map<Band>(bandDTO);
+            var localBand = await _bandService.PostBand(band);
 
             return Ok(localBand);
         }
