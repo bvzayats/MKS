@@ -55,7 +55,7 @@ namespace Festival.Servises
             return band;
         }
 
-        public async void DeleteBand(int id)
+        public async Task DeleteBand(int id)
         {
             var band = _context.Bands.Find(id);
 
