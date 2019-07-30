@@ -59,7 +59,12 @@ namespace Festival.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteBand(int id)
         {
-            return NotFound();
+            var band = await _bandService.DeleteBand(id);
+
+            if (band == null)
+                return NotFound();
+
+            return Ok(band);
         }
     }
 }

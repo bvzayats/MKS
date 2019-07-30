@@ -13,5 +13,7 @@ namespace Festival.Servises
         Task<Band> PutBand(int id, Band band);
 
         Task<Band> PostBand(Band band);
+
+        Task<Band> DeleteBand(int id);
     }
 }
