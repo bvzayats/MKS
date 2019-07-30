@@ -38,21 +38,21 @@ namespace Festival.Controllers
 
         // PUT: api/Bands/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutBand(int id, Band band)
+        public async Task<IActionResult> PutBand(int id, BandDTO bandDTO)
         {
-            var localBand = await _bandService.PutBand(id, band);
+            var localBand = await _bandService.PutBand(id, BandDTO.ConvertToEntity(bandDTO));
 
             if (localBand == null)
                 return BadRequest();
 
-            return Ok(band);
+            return Ok(localBand);
         }
 
         // POST: api/Bands
         [HttpPost]
-        public async Task<IActionResult> PostBand(Band band)
+        public async Task<IActionResult> PostBand(BandDTO bandDTO)
         {
-            var localBand = await _bandService.PostBand(band);
+            var localBand = await _bandService.PostBand(BandDTO.ConvertToEntity(bandDTO));
 
             return Ok(localBand);
         }
