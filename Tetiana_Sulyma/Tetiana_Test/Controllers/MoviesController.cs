@@ -10,7 +10,7 @@ namespace Tetiana_Test.Controllers
     {
           // GET api/movies
         [HttpGet]
-        public ActionResult<IEnumerable<MovieModel>> Get()
+        public IActionResult Get()
         {
             List<MovieModel> movieModel = Tetiana_Test.Services.Services.Get();
             return Ok(movieModel);
