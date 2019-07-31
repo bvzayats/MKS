@@ -96,7 +96,7 @@ namespace Nedo_net.Controllers
             {
                 sqlcomm.Delete(id);
 
-                return Ok();
+                return NoContent();
             }
             catch (Exception ex)
             {
