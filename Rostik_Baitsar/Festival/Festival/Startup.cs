@@ -1,4 +1,6 @@
-﻿using Festival.Models;
+﻿using AutoMapper;
+using Festival.Mapping;
+using Festival.Models;
 using Festival.Servises;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -26,6 +28,16 @@ namespace Festival
             services.AddDbContext<BandContext>(options => options.UseSqlServer(connection));
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
             services.AddScoped<IBandService, BandService>();
+
+            var mappingConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new MappingProfile());
+            });
+
+            IMapper mapper = mappingConfig.CreateMapper();
+            services.AddSingleton(mapper);
+
+            services.AddMvc();
 
             services.AddSwaggerGen(x =>
             {

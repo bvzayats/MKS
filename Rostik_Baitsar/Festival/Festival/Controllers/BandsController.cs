@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Festival.Models;
 using Festival.Servises;
+using AutoMapper;
 
 namespace Festival.Controllers
 {
@@ -10,9 +11,11 @@ namespace Festival.Controllers
     public class BandsController : ControllerBase
     {
         private readonly IBandService _bandService;
-        public BandsController(IBandService bandService)
+        private readonly IMapper _mapper;
+        public BandsController(IBandService bandService, IMapper mapper)
         {
             _bandService = bandService;
+            _mapper = mapper;
         }
 
         // GET: api/Bands
@@ -37,23 +40,45 @@ namespace Festival.Controllers
 
         // PUT: api/Bands/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutBand(int id, Band band)
+        public async Task<IActionResult> PutBand(BandDTO bandDTO)
         {
-            return Ok();
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var band = _mapper.Map<Band>(bandDTO);
+            
+            var localBand = await _bandService.PutBand(band); 
+
+            if (localBand == null)
+                return BadRequest();
+
+            return Ok(localBand);
         }
 
         // POST: api/Bands
         [HttpPost]
-        public async Task<IActionResult> PostBand(Band band)
+        public async Task<IActionResult> PostBand(BandDTO bandDTO)
         {
-            return Ok();
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            var band = _mapper.Map<Band>(bandDTO);
+            var localBand = await _bandService.PostBand(band);
+
+            return Ok(localBand);
         }
 
         // DELETE: api/Bands/5
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteBand(int id)
         {
-            return Ok();
+            await _bandService.DeleteBand(id);
+
+            return NoContent();
         }
     }
 }

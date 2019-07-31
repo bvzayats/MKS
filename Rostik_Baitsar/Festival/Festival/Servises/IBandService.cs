@@ -9,5 +9,11 @@ namespace Festival.Servises
         Task<List<Band>> GetBands();
 
         Task<Band> GetBand(int id);
+
+        Task<Band> PutBand(Band band);
+
+        Task<Band> PostBand(Band band);
+
+        Task DeleteBand(int id);
     }
 }
