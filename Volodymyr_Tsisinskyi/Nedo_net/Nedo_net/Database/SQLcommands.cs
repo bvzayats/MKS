@@ -15,7 +15,7 @@ namespace Nedo_net.Database
             conn = DBUtils.GetDBConnection();
         }
 
-        public Dictionary<int, Student> SelectAll()
+        public List<Student> SelectAll()
         {
             List<Student> items = new List<Student>();
 
@@ -35,12 +35,7 @@ namespace Nedo_net.Database
                 items.Add(item);
             }
 
-            Dictionary<int, Student> _result = new Dictionary<int, Student>();
-            for (int i = 0; i < items.Count; i++)
-                _result.Add(i + 1, items[i]);
-
-
-            return _result;
+            return items;
         }
 
         public Student Select(int id)
@@ -59,7 +54,7 @@ namespace Nedo_net.Database
             return item;
         }
 
-        public void Insert(int id, Student value)
+        public void Insert(int id, StudentDTO value)
         {
             conn.Open();
             SqlDataAdapter dataAdapter = new SqlDataAdapter();
@@ -69,7 +64,7 @@ namespace Nedo_net.Database
             conn.Close();
         }
 
-        public void Update(int id, Student value)
+        public void Update(int id, StudentDTO value)
         {
             conn.Open();
             SqlDataAdapter dataAdapter = new SqlDataAdapter();
