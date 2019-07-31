@@ -1,6 +1,6 @@
-﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
+using Tetiana_Test.Models;
 
 namespace Tetiana_Test.Controllers
 {
@@ -8,12 +8,13 @@ namespace Tetiana_Test.Controllers
     [ApiController]
     public class MoviesController : ControllerBase
     {
-        // const connectionString = 
-        // GET api/movies
+          // GET api/movies
         [HttpGet]
-        public IEnumerable<string> Get()
+        public IActionResult Get()
         {
-           return new string[] { "Movies" };
+            List<MovieModel> movieModel = Tetiana_Test.Services.Services.Get();
+            return Ok(movieModel);
+                   
         }
 
         // GET api/movies/5
