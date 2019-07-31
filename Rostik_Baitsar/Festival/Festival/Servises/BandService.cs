@@ -26,15 +26,12 @@ namespace Festival.Servises
             return band;
         }
 
-        public async Task<Band> PutBand(int id, Band band)
+        public async Task<Band> PutBand(Band band)
         {
-            if (id != band.Id)
-            {
-                return null;
-            }
-
             _context.Entry(band).State = EntityState.Modified;
 
+            var bandFromDB = await _context.Bands.FindAsync(band.Id);
+            
             try
             {
                 await _context.SaveChangesAsync();
@@ -44,7 +41,7 @@ namespace Festival.Servises
                 return null;
             }
 
-            return band;
+            return bandFromDB;
         }
 
         public async Task<Band> PostBand(Band band)

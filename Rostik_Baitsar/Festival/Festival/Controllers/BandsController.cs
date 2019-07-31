@@ -40,10 +40,10 @@ namespace Festival.Controllers
 
         // PUT: api/Bands/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutBand(int id, BandDTO bandDTO)
+        public async Task<IActionResult> PutBand(BandDTO bandDTO)
         {
             var band = _mapper.Map<Band>(bandDTO);
-            var localBand = await _bandService.PutBand(id, band);
+            var localBand = await _bandService.PutBand(band);
 
             if (localBand == null)
                 return BadRequest();
