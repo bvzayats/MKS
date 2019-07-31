@@ -43,7 +43,8 @@ namespace Festival.Controllers
         public async Task<IActionResult> PutBand(BandDTO bandDTO)
         {
             var band = _mapper.Map<Band>(bandDTO);
-            var localBand = await _bandService.PutBand(band);
+            
+            var localBand = await _bandService.PutBand(band); 
 
             if (localBand == null)
                 return BadRequest();

@@ -28,18 +28,15 @@ namespace Festival.Servises
 
         public async Task<Band> PutBand(Band band)
         {
-            _context.Entry(band).State = EntityState.Modified;
-
             var bandFromDB = await _context.Bands.FindAsync(band.Id);
-            
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
+            if (bandFromDB == null)
                 return null;
-            }
+
+            UpDateBand(bandFromDB, band);
+
+            _context.Entry(bandFromDB).State = EntityState.Modified;
+
+            await _context.SaveChangesAsync();
 
             return bandFromDB;
         }
@@ -60,5 +57,12 @@ namespace Festival.Servises
             await _context.SaveChangesAsync();
         }
 
+        private void UpDateBand(Band bandFromDB, Band band)
+        {
+            bandFromDB.Name = band.Name;
+            bandFromDB.Nationality = band.Nationality;
+            bandFromDB.PerformanceTime = band.PerformanceTime;
+            bandFromDB.Fee = band.Fee;
+        }
     }
 }
