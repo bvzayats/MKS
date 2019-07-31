@@ -42,6 +42,11 @@ namespace Festival.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> PutBand(BandDTO bandDTO)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             var band = _mapper.Map<Band>(bandDTO);
             
             var localBand = await _bandService.PutBand(band); 
@@ -56,6 +61,11 @@ namespace Festival.Controllers
         [HttpPost]
         public async Task<IActionResult> PostBand(BandDTO bandDTO)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             var band = _mapper.Map<Band>(bandDTO);
             var localBand = await _bandService.PostBand(band);
 
