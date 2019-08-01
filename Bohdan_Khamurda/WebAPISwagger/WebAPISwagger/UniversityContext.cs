@@ -1,12 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 
+namespace WebAPISwagger {
+    public partial class UniversityContext : DbContext {
+        public UniversityContext( DbContextOptions<UniversityContext> options )
+            : base(options) {
 
-namespace WebAPISwagger
-{
-    public partial class UniversityContext : DbContext
-    {
-        public UniversityContext()
-        {
+            Database.EnsureCreated();
         }
 
         public UniversityContext(DbContextOptions<UniversityContext> options)
